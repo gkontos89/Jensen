@@ -1,11 +1,13 @@
+import xlrd
 import openpyxl
+import pandas
 from openpyxl.styles import Font
 
 from excel.AddressEntry import AddressEntry
 
 
 class ExcelProcessor:
-    def __init__(self, exported_file_name):
+    def __init__(self):
         self.address_entries = dict()
         self.processed_file_name = None
         self.processed_work_book = None
@@ -15,17 +17,27 @@ class ExcelProcessor:
 
     def pre_process_file(self, exported_file_name):
         self.processed_file_name = exported_file_name.split('.')[0] + '_Processed.xlsx'
-        work_book = openpyxl.load_workbook(exported_file_name)
-        work_sheet = work_book.get_sheet_by_name(exported_file_name.split('.')[0])
 
-        for i in range(2, work_sheet.max_row+1):
-            row = str(i)
-            address_entry = AddressEntry(work_sheet['A' + row])
-            address_entry.set_zip_code(work_sheet['B' + row])
-            address_entry.set_leasing_company_name(work_sheet['H' + row])
-            self.address_entries[address_entry.address] = address_entry
+        # Handle .xls format, which is actually HTML out of co-star
+        if exported_file_name.split('.')[1] == 'xls':
+            data = pandas.read_html(exported_file_name)[0]
+            for i in range(0, len(data)):
+                address_entry = AddressEntry(data[0][i])
+                address_entry.set_zip_code(data[1][i])
+                address_entry.set_leasing_company_name(data[8][i])
+                self.address_entries[address_entry.address] = address_entry
+        else:
+            work_book = openpyxl.load_workbook(exported_file_name)
+            work_sheet = work_book.get_sheet_by_name(exported_file_name.split('.')[0])
 
-        work_book.close()
+            for i in range(2, work_sheet.max_row+1):
+                row = str(i)
+                address_entry = AddressEntry(work_sheet['A' + row])
+                address_entry.set_zip_code(work_sheet['B' + row])
+                address_entry.set_leasing_company_name(work_sheet['H' + row])
+                self.address_entries[address_entry.address] = address_entry
+
+            work_book.close()
 
     def generate_post_processed_file(self):
         work_book = openpyxl.Workbook()
@@ -109,3 +121,10 @@ class ExcelProcessor:
 
         work_book.save(self.processed_file_name)
 
+
+if __name__ == '__main__':
+    excel_processor = ExcelProcessor()
+    excel_processor.pre_process_file('C:\\JensenProperties\\export.xls')
+    excel_processor.address_entries['875 N Michigan Ave'].add_square_footage(4000)
+    excel_processor.address_entries['875 N Michigan Ave'].add_square_footage(460)
+    excel_processor.address_entries['875 N Michigan Ave'].add_contact('George', 'gk@gmail.com', '8479034782')
