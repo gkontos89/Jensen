@@ -2,6 +2,7 @@ import xlrd
 import openpyxl
 import pandas
 from openpyxl.styles import Font
+from openpyxl.utils import get_column_letter
 
 from excel.AddressEntry import AddressEntry
 
@@ -21,11 +22,13 @@ class ExcelProcessor:
         # Handle .xls format, which is actually HTML out of co-star
         if exported_file_name.split('.')[1] == 'xls':
             data = pandas.read_html(exported_file_name)[0]
-            for i in range(0, len(data)):
+            for i in range(1, len(data)):
                 address_entry = AddressEntry(data[0][i])
                 address_entry.set_zip_code(data[1][i])
-                address_entry.set_leasing_company_name(data[8][i])
+                address_entry.set_leasing_company_name(data[7][i])
                 self.address_entries[address_entry.address] = address_entry
+        elif exported_file_name.split('.')[1] == 'csv':
+            pass
         else:
             work_book = openpyxl.load_workbook(exported_file_name)
             work_sheet = work_book.get_sheet_by_name(exported_file_name.split('.')[0])
@@ -56,9 +59,13 @@ class ExcelProcessor:
         '''
         Establish columns
         '''
-        # Building and Zip
+        # Building
         work_sheet.cell(1, 1).value = 'Building Address'
+        work_sheet.column_dimensions[get_column_letter(1)].width = 40
+
+        # Zip
         work_sheet.cell(1, 2).value = 'Zip'
+        work_sheet.column_dimensions[get_column_letter(2)].width = 10
 
         # Square footage
         square_footage_column_start_idx = 3
@@ -68,10 +75,12 @@ class ExcelProcessor:
         # Rent
         rent_column_idx = square_footage_column_start_idx + square_footage_column_count
         work_sheet.cell(1, rent_column_idx).value = 'Actual Rent'
+        work_sheet.column_dimensions[get_column_letter(rent_column_idx)].width = 15
 
         # Leasing company name
         leasing_company_idx = rent_column_idx + 1
         work_sheet.cell(1, leasing_company_idx).value = 'Leasing Company Name'
+        work_sheet.column_dimensions[get_column_letter(leasing_company_idx)].width = 40
 
         # Contacts
         contacts_column_start_idx = leasing_company_idx + 1
@@ -81,6 +90,10 @@ class ExcelProcessor:
             work_sheet.cell(1, entry_idx).value = 'Contact ' + contact_number
             work_sheet.cell(1, entry_idx+1).value = 'Email ' + contact_number
             work_sheet.cell(1, entry_idx+2).value = 'Phone ' + contact_number
+
+            work_sheet.column_dimensions[get_column_letter(entry_idx)].width = 25
+            work_sheet.column_dimensions[get_column_letter(entry_idx+1)].width = 25
+            work_sheet.column_dimensions[get_column_letter(entry_idx+2)].width = 15
             entry_idx += 3
 
         # Style first row
@@ -128,3 +141,6 @@ if __name__ == '__main__':
     excel_processor.address_entries['875 N Michigan Ave'].add_square_footage(4000)
     excel_processor.address_entries['875 N Michigan Ave'].add_square_footage(460)
     excel_processor.address_entries['875 N Michigan Ave'].add_contact('George', 'gk@gmail.com', '8479034782')
+    excel_processor.address_entries['321 N Clark St'].add_contact('sam', 'sa@gmail.com', '8479034782')
+    excel_processor.address_entries['321 N Clark St'].add_contact('ter', 'ter@gmail.com', '523-902-4452')
+    excel_processor.generate_post_processed_file()
