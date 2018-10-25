@@ -6,9 +6,10 @@ from web.Driver import WebBrowser
 
 
 class BrowserSelectionFrame(BaseFrame):
-    def __init__(self, parent, width, driver=None):
+    def __init__(self, parent, controller, width, driver=None):
         super().__init__(parent, width)
         self.parent = parent
+        self.controller = controller
         self.driver = driver
         self.instructions = Label(self, text='Welcome to Jensen!  Please select your preferred web browser below')
         self.instructions.config(pady=20)
@@ -39,6 +40,7 @@ class BrowserSelectionFrame(BaseFrame):
     def firefox_button_command(self):
         self.driver.configure_web_driver(WebBrowser.FIREFOX)
         self.driver.go_to_costar()
+        self.controller.show_frame('LoginFrame')
 
     def chrome_button_command(self):
         self.driver.configure_web_driver(WebBrowser.CHROME)

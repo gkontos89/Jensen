@@ -1,4 +1,3 @@
-import xlrd
 import openpyxl
 import pandas
 from openpyxl.styles import Font

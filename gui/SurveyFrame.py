@@ -44,7 +44,7 @@ class SurveyFrame(BaseFrame):
         self.driver.expand_client_entry(value)
 
     def process_form_button_command(self):
-        # TODO implement controller
+        # TODO implement controller, throw error for no selection
         client_name = self.client_list_box.get(self.client_list_box.curselection())
         form = self.forms_list_box.get(self.forms_list_box.curselection())
         self.driver.process_client_entry(client_name, form)

@@ -4,9 +4,10 @@ from gui.BaseFrame import BaseFrame
 
 
 class LoginFrame(BaseFrame):
-    def __init__(self, parent, width, driver=None):
+    def __init__(self, parent, controller, width, driver=None):
         super().__init__(parent, width)
         self.parent = parent
+        self.controller = controller
         self.driver = driver
         self.username_label = Label(self, text='Username')
         self.username_text_entry = Entry(self, width='50')
@@ -28,8 +29,6 @@ class LoginFrame(BaseFrame):
         self.driver.enter_username(self.username_text_entry.get())
         self.driver.enter_password(self.password_text_entry.get())
         self.driver.press_login_button()
-        self.driver.enter_menu()
-        self.driver.go_to_surveys()
 
 
 if __name__ == '__main__':
