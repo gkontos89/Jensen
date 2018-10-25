@@ -69,6 +69,20 @@ class Driver:
         self.surveys_element = SurveysElement(self.web_driver)
         self.surveys_element.go_to_surveys()
 
+    def collect_surveys(self):
+        self.my_surveys_i_frame = MySurveysIFrame(self.web_driver)
+        self.web_driver.switch_to.frame(self.my_surveys_i_frame)
+        self.the_client_list_element = TheClientListElement(self.web_driver)
+        return self.the_client_list_element.get_all_client_entry_names()
+
+    def expand_client_entry_and_get_forms(self, client_name):
+        self.my_surveys_i_frame = MySurveysIFrame(self.web_driver)
+        self.web_driver.switch_to.frame(self.my_surveys_i_frame)
+        self.the_client_list_element = TheClientListElement(self.web_driver)
+        client_entry_element = self.the_client_list_element.get_client_entry_element(client_name)
+        # TODO expand the damn plus sign somehow and grab the forms with it
+        return []
+
     def process_client_entry(self, client_name, form):
         """
         This will process a client's form all the way through exporting the data to csv, xls, ect. and then
