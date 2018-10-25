@@ -114,14 +114,19 @@ class Driver:
 
         self.excel_processor.generate_post_processed_file()
 
+        # TODO navigate back to Surveys option
+
 if __name__ == '__main__':
     driver = Driver()
     driver.configure_web_driver(WebBrowser.FIREFOX)
     driver.go_to_costar()
     driver.go_to_login_screen()
     driver.enter_username('sam.jensen@bairdwarner.com')
-    
+
     driver.press_login_button()
+    # driver.enter_menu()
+    # driver.go_to_surveys()
+    # driver.process_client_entry('george', '10/18/2018')
 
 
 
