@@ -4,9 +4,10 @@ from gui.BaseFrame import BaseFrame
 
 
 class SurveyFrame(BaseFrame):
-    def __init__(self, parent, width, driver=None):
+    def __init__(self, parent, controller, width, driver=None):
         super().__init__(parent, width)
         self.parent = parent
+        self.controller = controller
         self.driver = driver
         self.client_list_frame = Frame(self)
         self.form_list_frame = Frame(self)
@@ -47,7 +48,7 @@ class SurveyFrame(BaseFrame):
         # TODO implement controller, throw error for no selection
         client_name = self.client_list_box.get(self.client_list_box.curselection())
         form = self.forms_list_box.get(self.forms_list_box.curselection())
-        self.driver.process_client_entry(client_name, form)
+        self.controller.show_frame('ProcessingFrame', client_name=client_name, form=form)
 
 
 if __name__ == '__main__':

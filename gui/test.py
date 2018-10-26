@@ -9,7 +9,7 @@ class B(Button):
         self.config(command=self.update)
 
     def update(self):
-        self.p_handle.step(23)
+        self.p_handle.step(49)
 
 
 

@@ -2,6 +2,7 @@ from tkinter import Tk, Frame
 
 from gui.BrowserSelectionFrame import BrowserSelectionFrame
 from gui.LoginFrame import LoginFrame
+from gui.ProcessingFrame import ProcessingFrame
 from web.Driver import Driver
 
 
@@ -12,7 +13,7 @@ class Jensen(Tk):
         self.main_container.pack(side='top', fill='both', expand=True)
         self.frames = {}
         self.driver = Driver()
-        for frame in (BrowserSelectionFrame, LoginFrame):
+        for frame in (BrowserSelectionFrame, LoginFrame, ProcessingFrame):
             frame_name = frame.__name__
             f = frame(parent=self.main_container, controller=self, width=50, driver=self.driver)
             self.frames[frame_name] = f
@@ -20,9 +21,14 @@ class Jensen(Tk):
 
         self.show_frame('BrowserSelectionFrame')
 
-    def show_frame(self, frame_name):
+    def show_frame(self, frame_name, **kwargs):
         frame = self.frames[frame_name]
         frame.tkraise()
+        if frame_name == 'ProcessingFrame':
+            client_name = kwargs['client_name']
+            form = kwargs['form']
+            frame.start_processing(client_name, form)
+
 
 if __name__ == '__main__':
     root = Jensen()

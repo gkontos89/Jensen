@@ -83,11 +83,12 @@ class Driver:
         # TODO expand the damn plus sign somehow and grab the forms with it
         return []
 
-    def process_client_entry(self, client_name, form):
+    def process_client_entry(self, controller, client_name, form):
         """
         This will process a client's form all the way through exporting the data to csv, xls, ect. and then
         post processing the data into a properly formatted xlsx file
 
+        :param controller: handle to frame that contains elements for updating a GUI for progress
         :param client_name:  name of the client as in the table
         :param form: the form entry created underneath the client name
         :return: N/A
@@ -102,13 +103,25 @@ class Driver:
         self.export_element = ExportElement(self.web_driver)
         self.export_element.select_custom_filter()
         self.export_element.export_report() # TODO have argument for file extension?
+        controller.report_exporting_data_complete()
 
         # Process exported file
         self.excel_processor = ExcelProcessor()
         self.excel_processor.pre_process_file(form)  # TODO figure out extension
+        controller.report_pre_processed_data_complete()
+
+        '''
+        +1 for exporting the excel sheet
+        +1 for pre-processing export
+        +1 for generating post processed excel sheet
+        '''
+        number_of_steps = len(self.excel_processor.address_entries) + 3
+        controller.set_number_of_processing_steps(number_of_steps)
+
 
         # TODO loop through addresses and grab relevant information
         for address, address_entry in self.excel_processor.address_entries.items():
+            controller.update_name_of_processing_address(address)
             # TODO will this work? DO YOU HAVE TO SWITCH THE IFRAME BACK???
             self.go_to_surveys()
 
@@ -117,16 +130,20 @@ class Driver:
             # Go to lease page
 
             # Grab leases only for Relet, !Sublet, !Regus and get square footage options
-            #address_entry.add_square_footage()
+            # address_entry.add_square_footage()
+            controller.report_square_footage_retrieved()
 
             # Grab rent range
-            #address_entry.set_actual_rent()
+            # address_entry.set_actual_rent()
+            controller.report_rent_range_retrieved()
 
             # Go to Individual Listing and grab contact information
-            #address_entry.add_contact(name, email, phone)
-
+            # address_entry.add_contact(name, email, phone)
+            controller.report_contact_information_retrieved()
+            controller.report_address_processed()
 
         self.excel_processor.generate_post_processed_file()
+        controller.report_processed_file_complete()
 
         # TODO navigate back to Surveys option
 
