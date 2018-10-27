@@ -1,4 +1,4 @@
-from tkinter import Label, Entry, Button, Tk
+from tkinter import Label, Entry, Button, Tk, LEFT, CENTER
 
 from gui.BaseFrame import BaseFrame
 
@@ -16,12 +16,13 @@ class LoginFrame(BaseFrame):
         self.password_text_entry = Entry(self, width='50', show='*')
         self.password_text_entry.insert(0, 'develop23')  # TODO get default from file or pickle
         self.login_button = Button(self, text='Login', command=self.login_button_command)
-        self.back_button = Button(self, text='Back') # TODO set to controller.show_frame browswerslection
+        self.back_button = Button(self, text='Back', command=self.back_button_command)
         self.username_label.pack()
         self.username_text_entry.pack()
         self.password_label.pack()
         self.password_text_entry.pack()
         self.login_button.pack()
+        self.back_button.pack()
 
     def login_button_command(self):
         # TODO add try catch for failed login
@@ -29,6 +30,11 @@ class LoginFrame(BaseFrame):
         self.driver.enter_username(self.username_text_entry.get())
         self.driver.enter_password(self.password_text_entry.get())
         self.driver.press_login_button()
+        self.controller.show_frame('WaitingForQrFrame')
+
+    def back_button_command(self):
+        self.driver.close_web_driver()
+        self.controller.show_frame('BrowserSelectionFrame')
 
 
 if __name__ == '__main__':
@@ -36,7 +42,7 @@ if __name__ == '__main__':
     root.geometry('500x500')
     # root.resizable(0, 0)
 
-    base_frame = LoginFrame(root, 50)
+    base_frame = LoginFrame(root, root, 50)
     base_frame.pack()
     root.mainloop()
 

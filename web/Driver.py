@@ -42,6 +42,9 @@ class Driver:
         elif web_browser == WebBrowser.EDGE:
             self.web_driver = webdriver.Edge()
 
+    def close_web_driver(self):
+        self.web_driver.close()
+
     def go_to_costar(self):
         self.web_driver.get('http://costar.com')
 
