@@ -9,7 +9,7 @@ class JensenBanner(Frame):
         self.master = parent
 
         # Label
-        self.label = Label(self)
+        self.label = Label(self, pady=10)
         self.label.config(text='Jensen ' + version)
         self.label.config(bg='#000000')
         self.label.config(fg='#fff')

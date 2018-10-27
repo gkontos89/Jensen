@@ -24,6 +24,12 @@ class ProcessingProgressBar(Progressbar):
         else:
             self.config(value=99.9)
 
+    def reset(self):
+        self.config(value=0)
+        self.current_step = 0
+        self.number_of_steps = 0
+        self.step_increment_amount = 0
+
 
 if __name__ == '__main__':
     root = Tk()

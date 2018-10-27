@@ -118,8 +118,10 @@ class Driver:
         number_of_steps = len(self.excel_processor.address_entries) + 3
         controller.set_number_of_processing_steps(number_of_steps)
 
-
         # TODO loop through addresses and grab relevant information
+        address_processed_count = 0
+        total_addresses = len(self.excel_processor.address_entries)
+        controller.report_number_of_listings_found(total_addresses)
         for address, address_entry in self.excel_processor.address_entries.items():
             controller.update_name_of_processing_address(address)
             # TODO will this work? DO YOU HAVE TO SWITCH THE IFRAME BACK???
@@ -141,11 +143,17 @@ class Driver:
             # address_entry.add_contact(name, email, phone)
             controller.report_contact_information_retrieved()
             controller.report_address_processed()
+            address_processed_count += 1
+            controller.update_listings_processed(address_processed_count)
 
         self.excel_processor.generate_post_processed_file()
         controller.report_processed_file_complete()
 
         # TODO navigate back to Surveys option
+
+    def get_processed_file_name(self):
+        return self.excel_processor.processed_file_name
+
 
 if __name__ == '__main__':
     driver = Driver()

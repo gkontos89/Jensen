@@ -10,9 +10,6 @@ class BaseFrame(Frame):
         self.jensen_banner = JensenBanner(self, banner_width=width)
         self.jensen_banner.pack()
 
-    def notify_master_to_transition(self):
-        pass
-
 
 if __name__ == '__main__':
     root = Tk()
