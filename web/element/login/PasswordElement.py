@@ -1,3 +1,5 @@
+from selenium.webdriver.common.keys import Keys
+
 PASSWORD_ID = 'password'
 
 
@@ -7,4 +9,6 @@ class PasswordElement:
         self.web_element = self.web_driver_handle.find_element_by_id(PASSWORD_ID)
 
     def enter_password(self, password):
+        self.web_element.send_keys(Keys.CONTROL + 'a')
+        self.web_element.send_keys(Keys.DELETE)
         self.web_element.send_keys(password)

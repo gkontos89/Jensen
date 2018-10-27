@@ -20,7 +20,8 @@ class SurveyFrame(BaseFrame):
         self.client_list_box.config(yscrollcommand=self.client_list_scrollbar.set)
         self.forms_list_box = Listbox(self.form_list_frame, height=10, width=35)
         self.forms_list_scrollbar = Scrollbar(self.form_list_frame, command=self.forms_list_box.yview)
-        self.process_form_button = Button(self.processing_frame, text='Process Form', command=self.process_form_button_command)
+        self.process_form_button = Button(self.processing_frame, text='Process Form',
+                                          command=self.process_form_button_command)
 
         # Packing
         self.collect_surveys_button.pack()
@@ -34,6 +35,7 @@ class SurveyFrame(BaseFrame):
         self.processing_frame.pack()
 
     def collect_surveys_button_command(self):
+        self.client_list_box.delete(0, 'end')
         client_entry_names = self.driver.collect_surveys()
         for client_entry_name in client_entry_names:
             self.client_list_box.insert('end', client_entry_name)
@@ -42,12 +44,16 @@ class SurveyFrame(BaseFrame):
         widget = evt.widget
         index = int(widget.curselection()[0])
         value = widget.get(index)
-        self.driver.expand_client_entry(value)
+        self.forms_list_box.delete(0, 'end')
+        forms = self.driver.expand_client_entry_and_get_forms(value)
+        for form in forms:
+            self.forms_list_box.insert('end', form)
 
     def process_form_button_command(self):
         # TODO implement controller, throw error for no selection
         client_name = self.client_list_box.get(self.client_list_box.curselection())
         form = self.forms_list_box.get(self.forms_list_box.curselection())
+        # TODO 'click' the form link, just pass on the form name and client for export purposes
         self.controller.show_frame('ProcessingFrame', client_name=client_name, form=form)
 
 
@@ -56,6 +62,6 @@ if __name__ == '__main__':
     root.geometry('500x500')
     # root.resizable(0, 0)
 
-    base_frame = SurveyFrame(root, 50)
+    base_frame = SurveyFrame(root, root, 50)
     base_frame.pack()
     root.mainloop()

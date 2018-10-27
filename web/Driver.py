@@ -1,16 +1,23 @@
+import getpass
+import os
+import platform
 from enum import Enum
 from selenium import webdriver
 
 from excel.ExcelProcessor import ExcelProcessor
-from web.element.ExportElement import ExportElement
-from web.element.LoginButtonElement import LoginButtonElement
-from web.element.LoginElement import LoginElement
-from web.element.MenuElement import MenuElement
-from web.element.MySurveysIFrame import MySurveysIFrame
-from web.element.PasswordElement import PasswordElement
-from web.element.SurveysElement import SurveysElement
-from web.element.TheClientListElement import TheClientListElement
-from web.element.UsernameElement import UsernameElement
+from web.ExportDriver import ExportDriver
+from web.element.LeaseDriver import LeaseDriver
+from web.element.clients.AddressTableElement import AddressTableElement
+from web.element.export.ExportFileTypeElement import ExportFileType
+from web.element.clients.LeaseButtonElement import LeaseButtonElement
+from web.element.login.LoginButtonElement import LoginButtonElement
+from web.element.login.LoginElement import LoginElement
+from web.element.clients.MenuElement import MenuElement
+from web.element.clients.MySurveysIFrame import MySurveysIFrame
+from web.element.login.PasswordElement import PasswordElement
+from web.element.clients.SurveysElement import SurveysElement
+from web.element.clients.TheClientListElement import TheClientListElement
+from web.element.login.UsernameElement import UsernameElement
 
 
 class WebBrowser(Enum):
@@ -30,7 +37,7 @@ class Driver:
         self.password_element = None
         self.surveys_element = None
         self.the_client_list_element = None
-        self.export_element = None
+        self.export_driver = None
         self.excel_processor = None
 
     def configure_web_driver(self, web_browser):
@@ -64,6 +71,10 @@ class Driver:
         self.login_button_element = LoginButtonElement(self.web_driver)
         self.login_button_element.login()
 
+    def check_for_valid_credentials(self):
+        self.web_driver.implicitly_wait(5)
+        self.web_driver.find_element_by_class_name('instruction-message-container2')
+
     def enter_menu(self):
         self.menu_element = MenuElement(self.web_driver)
         self.menu_element.enter_menu()
@@ -86,6 +97,14 @@ class Driver:
         # TODO expand the damn plus sign somehow and grab the forms with it
         return []
 
+    def initiate_data_export(self, controller, export_file_type=ExportFileType.MICROSOFT_EXCEL_FILE):
+        self.export_driver = ExportDriver(self.web_driver)
+        self.export_driver.go_to_export_screen()
+        self.export_driver.select_custom_export_filter('Retail 1')
+        self.export_driver.select_export_file_type(export_file_type)
+        self.export_driver.export_data()
+        controller.show_continue_export_button()
+
     def process_client_entry(self, controller, client_name, form):
         """
         This will process a client's form all the way through exporting the data to csv, xls, ect. and then
@@ -96,21 +115,15 @@ class Driver:
         :param form: the form entry created underneath the client name
         :return: N/A
         """
-        self.my_surveys_i_frame = MySurveysIFrame(self.web_driver)
-        self.web_driver.switch_to.frame(self.my_surveys_i_frame)
-        self.the_client_list_element = TheClientListElement(self.web_driver)
-        client_entry_element = self.the_client_list_element.get_client_entry_element(client_name)
-        # TODO use this entry element to somehow expand the damn plus sign, then grab the correct form passed in
-
-        # TODO actually use the export element
-        self.export_element = ExportElement(self.web_driver)
-        self.export_element.select_custom_filter()
-        self.export_element.export_report() # TODO have argument for file extension?
-        controller.report_exporting_data_complete()
-
         # Process exported file
         self.excel_processor = ExcelProcessor()
-        self.excel_processor.pre_process_file(form)  # TODO figure out extension
+        # Find out the file location based on OS
+        download_path = None
+        if platform.system() == 'Windows':
+            download_path = os.path.join('C:\\Users', getpass.getuser(), 'Downloads', 'Export' + form + '.xls')
+            # TODO figure out download location for MAC
+
+        self.excel_processor.pre_process_file(download_path)  # TODO figure out extension
         controller.report_pre_processed_data_complete()
 
         '''
@@ -127,23 +140,19 @@ class Driver:
         controller.report_number_of_listings_found(total_addresses)
         for address, address_entry in self.excel_processor.address_entries.items():
             controller.update_name_of_processing_address(address)
-            # TODO will this work? DO YOU HAVE TO SWITCH THE IFRAME BACK???
-            self.go_to_surveys()
 
+            # Grab the table and find the correct address link
             # Go to address page
+            address_table_element = AddressTableElement(self.web_driver)
+            address_table_element.go_to_address_entry(address)
 
-            # Go to lease page
-
-            # Grab leases only for Relet, !Sublet, !Regus and get square footage options
-            # address_entry.add_square_footage()
+            # Navigate to lease page
+            lease_button_element = LeaseButtonElement(self.web_driver)
+            lease_button_element.go_to_lease_info()
+            lease_driver = LeaseDriver(self.web_driver)
+            lease_driver.process_lease_listings(address_entry)
             controller.report_square_footage_retrieved()
-
-            # Grab rent range
-            # address_entry.set_actual_rent()
             controller.report_rent_range_retrieved()
-
-            # Go to Individual Listing and grab contact information
-            # address_entry.add_contact(name, email, phone)
             controller.report_contact_information_retrieved()
             controller.report_address_processed()
             address_processed_count += 1

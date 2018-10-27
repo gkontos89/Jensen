@@ -33,8 +33,6 @@ class Jensen(Tk):
             frame.start_waiting_for_qr()
 
 
-
-
 if __name__ == '__main__':
     root = Jensen()
     root.geometry('500x500')

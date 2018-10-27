@@ -12,12 +12,16 @@ class ProcessingFrame(BaseFrame):
         self.parent = parent
         self.controller = controller
         self.driver = driver
+        self.current_client_name = None
+        self.current_form_name = None
         self.number_of_listings_to_process = -1
         self.processing_status_frame = LabelFrame(self, text='Processing', width=50, pady=20)
         self.processing_progress_frame = LabelFrame(self, text='Overall Progress', width=50)
-        self.processing_address_text = Label(self.processing_status_frame)
+        self.continue_export_button = Button(self.processing_status_frame, text='Click after export is complete...',
+                                             command=self.continue_export_button_command)
         self.exporting_data_text = Label(self.processing_status_frame)
         self.number_of_listings_found_text = Label(self.processing_status_frame)
+        self.processing_address_text = Label(self.processing_status_frame)
         self.pre_processed_data_complete_text = Label(self.processing_status_frame)
         self.square_footage_retrieved_text = Label(self.processing_status_frame)
         self.rent_range_retrieved_text = Label(self.processing_status_frame)
@@ -29,6 +33,8 @@ class ProcessingFrame(BaseFrame):
         self.view_processed_file_button = Button(self, text='View processed file',
                                                  command=self.view_processed_file_button_command)
 
+        self.continue_export_button.pack()
+        self.continue_export_button.pack_forget()
         self.exporting_data_text.pack()
         self.number_of_listings_found_text.pack()
         self.processing_address_text.pack()
@@ -48,9 +54,12 @@ class ProcessingFrame(BaseFrame):
 
     def start_processing(self, client_name, form):
         self.reset_processing_screen()
-        self.driver.process_client_entry(self, client_name, form)
+        self.current_client_name = client_name
+        self.current_form_name = form
+        self.driver.initiate_data_export(self, client_name, form)
 
     def reset_processing_screen(self):
+        self.continue_export_button.pack_forget()
         self.exporting_data_text.config(text='')
         self.number_of_listings_found_text.config(text='')
         self.pre_processed_data_complete_text.config(text='')
@@ -112,6 +121,13 @@ class ProcessingFrame(BaseFrame):
         self.view_processed_file_button.pack()
         self.finished_button.pack()
         # TODO hide cancel button
+
+    def show_continue_export_button(self):
+        self.continue_export_button.pack()
+        self.report_exporting_data_complete()
+
+    def continue_export_button_command(self):
+        self.driver.process_client_entry(self, self.current_client_name, self.current_form_name)
 
     def view_processed_file_button_command(self):
         processed_file_name = self.driver.get_processed_file_name()
