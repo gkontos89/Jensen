@@ -166,6 +166,14 @@ class Driver:
     def get_processed_file_name(self):
         return self.excel_processor.processed_file_name
 
+    def testing_only_quick_login(self):
+        self.configure_web_driver(WebBrowser.FIREFOX)
+        self.go_to_costar()
+        self.go_to_login_screen()
+        self.enter_username('sam.jensen@bairdwarner.com')
+        self.enter_password('develop23')
+        self.press_login_button()
+
 
 if __name__ == '__main__':
     driver = Driver()
