@@ -43,9 +43,9 @@ class BrowserSelectionFrame(BaseFrame):
         self.controller.show_frame('LoginFrame')
 
     def chrome_button_command(self):
-        pass
-        # self.driver.configure_web_driver(WebBrowser.CHROME)
-        # self.driver.go_to_costar()
+        self.driver.configure_web_driver(WebBrowser.CHROME)
+        self.driver.go_to_costar()
+        self.controller.show_frame('LoginFrame')
 
     def edge_button_command(self):
         pass

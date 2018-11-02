@@ -18,10 +18,10 @@ class Jensen(Tk):
         self.driver = Driver()
 
         # Add web driver executable to path
-        gecko_path = os.path.join(os.getcwd(), 'tools')
+        driver_path = os.path.join(os.getcwd(), 'tools', 'win' if platform.system() == 'Windows' else 'mac')
         current_path = os.environ['Path']
-        if gecko_path not in current_path:
-            os.environ['Path'] += os.pathsep + gecko_path
+        if driver_path not in current_path:
+            os.environ['Path'] += os.pathsep + driver_path
 
         for frame in (BrowserSelectionFrame, LoginFrame, ProcessingFrame, WaitingForQrFrame):
             frame_name = frame.__name__
