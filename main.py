@@ -1,3 +1,5 @@
+import os
+import platform
 from tkinter import Tk, Frame
 
 from gui.BrowserSelectionFrame import BrowserSelectionFrame
@@ -14,6 +16,13 @@ class Jensen(Tk):
         self.main_container.pack(side='top', fill='both', expand=True)
         self.frames = {}
         self.driver = Driver()
+
+        # Add web driver executable to path
+        gecko_path = os.path.join(os.getcwd(), 'tools')
+        current_path = os.environ['Path']
+        if gecko_path not in current_path:
+            os.environ['Path'] += os.pathsep + gecko_path
+
         for frame in (BrowserSelectionFrame, LoginFrame, ProcessingFrame, WaitingForQrFrame):
             frame_name = frame.__name__
             f = frame(parent=self.main_container, controller=self, width=50, driver=self.driver)
