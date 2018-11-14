@@ -6,7 +6,7 @@ from gui.BrowserSelectionFrame import BrowserSelectionFrame
 from gui.LoginFrame import LoginFrame
 from gui.ProcessingFrame import ProcessingFrame
 from gui.WaitingForQrFrame import WaitingForQrFrame
-from web.Driver import Driver
+from web.CoreDriver import CoreDriver
 
 
 class Jensen(Tk):
@@ -15,7 +15,7 @@ class Jensen(Tk):
         self.main_container = Frame(self)
         self.main_container.pack(side='top', fill='both', expand=True)
         self.frames = {}
-        self.driver = Driver()
+        self.driver = CoreDriver()
 
         # Add web driver executable to path
         driver_path = os.path.join(os.getcwd(), 'tools', 'win' if platform.system() == 'Windows' else 'mac')

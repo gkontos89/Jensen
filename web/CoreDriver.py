@@ -6,18 +6,16 @@ from selenium import webdriver
 
 from excel.ExcelProcessor import ExcelProcessor
 from web.ExportDriver import ExportDriver
-from web.element.LeaseDriver import LeaseDriver
+from web.LeaseDriver import LeaseDriver
+from web.LoginDriver import LoginDriver
 from web.element.clients.AddressTableElement import AddressTableElement
 from web.element.export.ExportFileTypeElement import ExportFileType
 from web.element.clients.LeaseButtonElement import LeaseButtonElement
-from web.element.login.LoginButtonElement import LoginButtonElement
-from web.element.login.LoginElement import LoginElement
-from web.element.clients.MenuElement import MenuElement
 from web.element.clients.MySurveysIFrame import MySurveysIFrame
-from web.element.login.PasswordElement import PasswordElement
-from web.element.clients.SurveysElement import SurveysElement
 from web.element.clients.TheClientListElement import TheClientListElement
-from web.element.login.UsernameElement import UsernameElement
+
+MENU_ID = 'csgp-menu-label'
+SURVEYS_TEXT = 'Surveys'
 
 
 class WebBrowser(Enum):
@@ -26,22 +24,19 @@ class WebBrowser(Enum):
     EDGE = 3
 
 
-class Driver:
+class CoreDriver:
     def __init__(self):
         self.web_driver = None
         self.login_element = None
         self.login_button_element = None
-        self.menu_element = None
         self.my_surveys_i_frame = None
         self.username_element = None
         self.password_element = None
-        self.surveys_element = None
         self.the_client_list_element = None
         self.export_driver = None
         self.excel_processor = None
 
     def configure_web_driver(self, web_browser):
-        # TODO add drivers to path
         if web_browser == WebBrowser.CHROME:
             self.web_driver = webdriver.Chrome()
         elif web_browser == WebBrowser.FIREFOX:
@@ -55,33 +50,13 @@ class Driver:
     def go_to_costar(self):
         self.web_driver.get('http://costar.com')
 
-    def go_to_login_screen(self):
-        self.login_element = LoginElement(self.web_driver)
-        self.login_element.go_to_login_screen()
-
-    def enter_username(self, username):
-        self.username_element = UsernameElement(self.web_driver)
-        self.username_element.enter_username(username)
-
-    def enter_password(self, password):
-        self.password_element = PasswordElement(self.web_driver)
-        self.password_element.enter_password(password)
-
-    def press_login_button(self):
-        self.login_button_element = LoginButtonElement(self.web_driver)
-        self.login_button_element.login()
-
-    def check_for_valid_credentials(self):
-        self.web_driver.implicitly_wait(5)
-        self.web_driver.find_element_by_class_name('instruction-message-container2')
-
-    def enter_menu(self):
-        self.menu_element = MenuElement(self.web_driver)
-        self.menu_element.enter_menu()
+    def open_menu(self):
+        menu_element = self.web_driver.find_element_by_id(MENU_ID)
+        menu_element.click()
 
     def go_to_surveys(self):
-        self.surveys_element = SurveysElement(self.web_driver)
-        self.surveys_element.go_to_surveys()
+        surveys_element = self.web_driver.find_element_by_link_text(SURVEYS_TEXT)
+        surveys_element.click()
 
     def collect_surveys(self):
         self.my_surveys_i_frame = MySurveysIFrame(self.web_driver)
@@ -161,7 +136,8 @@ class Driver:
         self.excel_processor.generate_post_processed_file()
         controller.report_processed_file_complete()
 
-        # TODO navigate back to Surveys option
+        self.open_menu()
+        self.go_to_surveys()
 
     def get_processed_file_name(self):
         return self.excel_processor.processed_file_name
@@ -169,23 +145,22 @@ class Driver:
     def testing_only_quick_login(self):
         self.configure_web_driver(WebBrowser.FIREFOX)
         self.go_to_costar()
-        self.go_to_login_screen()
-        self.enter_username('sam.jensen@bairdwarner.com')
-        self.enter_password('develop23')
-        self.press_login_button()
+        login_driver = LoginDriver(self)
+        login_driver.go_to_login_screen()
+        login_driver.login('sam.jensen@bairdwarner.com', 'develop23')
+
+    def testing_only_quick_login_chrome(self):
+        self.configure_web_driver(WebBrowser.CHROME)
+        self.go_to_costar()
+        login_driver = LoginDriver(self)
+        login_driver.go_to_login_screen()
+        login_driver.login('sam.jensen@bairdwarner.com', 'develop23')
 
 
 if __name__ == '__main__':
-    driver = Driver()
+    driver = CoreDriver()
     driver.configure_web_driver(WebBrowser.FIREFOX)
     driver.go_to_costar()
-    driver.go_to_login_screen()
-    driver.enter_username('sam.jensen@bairdwarner.com')
-
-    driver.press_login_button()
-    # driver.enter_menu()
-    # driver.go_to_surveys()
-    # driver.process_client_entry('george', '10/18/2018')
 
 
 

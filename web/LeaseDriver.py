@@ -35,8 +35,17 @@ class LeaseDriver:
                 contact_boxes = contacts_container.find_elements_by_xpath("//div[@class='contact-box']")
                 for contact_box in contact_boxes:
                     name = contact_box.find_element_by_class_name("contact-name").text
+
+                    # only grab mobile phone
                     phone = None
-                    email = None
+                    phone_numbers_container = contact_box.find_element_by_xpath("//div[@class='section contact-details']//div[@data-bind='foreach: PhoneNumbers.Items']")
+                    phone_number_elements = phone_numbers_container.find_elements_by_tag_name('div')
+                    for phone_number_element in phone_number_elements:
+                        if phone_number_element.find_element_by_xpath("//span[@data-bind='textWithTitle: Desc']").text == '(m)':
+                            phone = phone_number_element.find_element_by_xpath("//span[@data-bind='textWithTitle: Number']").text
+
+                    email = contact_box.find_element_by_tag_name('a').text
                     address_entry.add_contact(name=name, email=email, phone=phone)
 
-            # TODO find special back button handle and click it
+            go_back_button = self.web_driver_handle.find_element_by_class_name('go-back')
+            go_back_button.click()

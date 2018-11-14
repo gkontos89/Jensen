@@ -2,7 +2,7 @@ import os
 from tkinter import Button, Tk, PhotoImage, Label, LEFT
 
 from gui.BaseFrame import BaseFrame
-from web.Driver import WebBrowser
+from web.CoreDriver import WebBrowser
 
 
 class BrowserSelectionFrame(BaseFrame):

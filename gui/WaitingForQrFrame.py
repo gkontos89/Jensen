@@ -20,7 +20,7 @@ class WaitingForQrFrame(BaseFrame):
         self.go_to_surveys_button.pack_forget()
 
     def go_to_surveys_button_command(self):
-        self.driver.enter_menu()
+        self.driver.open_menu()
         self.driver.go_to_surveys()
         self.controller.show_frame('SurveyFrame')
 

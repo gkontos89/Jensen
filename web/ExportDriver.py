@@ -28,7 +28,7 @@ class ExportDriver:
 
     def export_data(self):
         self.export_data_element = ExportDataElement(self.web_driver_handle)
-        self.export_data()
+        self.export_data_element.export_data()
 
     def reset_window_handles(self):
         self.web_driver_handle.close()
