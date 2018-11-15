@@ -1,6 +1,7 @@
 from tkinter import Button, Listbox, Scrollbar, VERTICAL, LEFT, Tk, Y, RIGHT, Frame
 
 from gui.BaseFrame import BaseFrame
+from web.SurveysDriver import SurveysDriver
 
 
 class SurveyFrame(BaseFrame):
@@ -9,6 +10,7 @@ class SurveyFrame(BaseFrame):
         self.parent = parent
         self.controller = controller
         self.driver = driver
+        self.surveys_driver = SurveysDriver(driver)
         self.client_list_frame = Frame(self)
         self.form_list_frame = Frame(self)
         self.processing_frame = Frame(self)
@@ -36,7 +38,8 @@ class SurveyFrame(BaseFrame):
 
     def collect_surveys_button_command(self):
         self.client_list_box.delete(0, 'end')
-        client_entry_names = self.driver.collect_surveys()
+        self.surveys_driver.attach_to_survey_page()
+        client_entry_names = self.surveys_driver.get_client_entry_names()
         for client_entry_name in client_entry_names:
             self.client_list_box.insert('end', client_entry_name)
 
@@ -45,16 +48,16 @@ class SurveyFrame(BaseFrame):
         index = int(widget.curselection()[0])
         value = widget.get(index)
         self.forms_list_box.delete(0, 'end')
-        forms = self.driver.expand_client_entry_and_get_forms(value)
+        forms = self.surveys_driver.expand_client_entry_and_get_forms(value)
         for form in forms:
             self.forms_list_box.insert('end', form)
 
     def process_form_button_command(self):
-        # TODO implement controller, throw error for no selection
+        # TODO throw error for no selection
         client_name = self.client_list_box.get(self.client_list_box.curselection())
-        form = self.forms_list_box.get(self.forms_list_box.curselection())
-        # TODO 'click' the form link, just pass on the form name and client for export purposes
-        self.controller.show_frame('ProcessingFrame', client_name=client_name, form=form)
+        form_name = self.forms_list_box.get(self.forms_list_box.curselection())
+        self.surveys_driver.select_client_entry_form(form_name)
+        self.controller.show_frame('ProcessingFrame', client_name=client_name, form_name=form_name)
 
 
 if __name__ == '__main__':

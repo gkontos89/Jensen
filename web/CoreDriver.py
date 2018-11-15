@@ -5,17 +5,11 @@ from enum import Enum
 from selenium import webdriver
 
 from excel.ExcelProcessor import ExcelProcessor
+from web.AddressTableDriver import AddressTableDriver
 from web.ExportDriver import ExportDriver
 from web.LeaseDriver import LeaseDriver
 from web.LoginDriver import LoginDriver
-from web.element.clients.AddressTableElement import AddressTableElement
 from web.element.export.ExportFileTypeElement import ExportFileType
-from web.element.clients.LeaseButtonElement import LeaseButtonElement
-from web.element.clients.MySurveysIFrame import MySurveysIFrame
-from web.element.clients.TheClientListElement import TheClientListElement
-
-MENU_ID = 'csgp-menu-label'
-SURVEYS_TEXT = 'Surveys'
 
 
 class WebBrowser(Enum):
@@ -27,12 +21,6 @@ class WebBrowser(Enum):
 class CoreDriver:
     def __init__(self):
         self.web_driver = None
-        self.login_element = None
-        self.login_button_element = None
-        self.my_surveys_i_frame = None
-        self.username_element = None
-        self.password_element = None
-        self.the_client_list_element = None
         self.export_driver = None
         self.excel_processor = None
 
@@ -51,26 +39,12 @@ class CoreDriver:
         self.web_driver.get('http://costar.com')
 
     def open_menu(self):
-        menu_element = self.web_driver.find_element_by_id(MENU_ID)
+        menu_element = self.web_driver.find_element_by_id('csgp-menu-label')
         menu_element.click()
 
     def go_to_surveys(self):
-        surveys_element = self.web_driver.find_element_by_link_text(SURVEYS_TEXT)
+        surveys_element = self.web_driver.find_element_by_link_text('Surveys')
         surveys_element.click()
-
-    def collect_surveys(self):
-        self.my_surveys_i_frame = MySurveysIFrame(self.web_driver)
-        self.web_driver.switch_to.frame(self.my_surveys_i_frame)
-        self.the_client_list_element = TheClientListElement(self.web_driver)
-        return self.the_client_list_element.get_all_client_entry_names()
-
-    def expand_client_entry_and_get_forms(self, client_name):
-        self.my_surveys_i_frame = MySurveysIFrame(self.web_driver)
-        self.web_driver.switch_to.frame(self.my_surveys_i_frame)
-        self.the_client_list_element = TheClientListElement(self.web_driver)
-        client_entry_element = self.the_client_list_element.get_client_entry_element(client_name)
-        # TODO expand the damn plus sign somehow and grab the forms with it
-        return []
 
     def initiate_data_export(self, controller, export_file_type=ExportFileType.MICROSOFT_EXCEL_FILE):
         self.export_driver = ExportDriver(self.web_driver)
@@ -108,8 +82,6 @@ class CoreDriver:
         '''
         number_of_steps = len(self.excel_processor.address_entries) + 3
         controller.set_number_of_processing_steps(number_of_steps)
-
-        # TODO loop through addresses and grab relevant information
         address_processed_count = 0
         total_addresses = len(self.excel_processor.address_entries)
         controller.report_number_of_listings_found(total_addresses)
@@ -118,20 +90,22 @@ class CoreDriver:
 
             # Grab the table and find the correct address link
             # Go to address page
-            address_table_element = AddressTableElement(self.web_driver)
-            address_table_element.go_to_address_entry(address)
+            address_table_driver = AddressTableDriver(self.web_driver)
+            address_table_driver.attach_to_address_table()
+            address_table_driver.go_to_address_page(address)
 
-            # Navigate to lease page
-            lease_button_element = LeaseButtonElement(self.web_driver)
-            lease_button_element.go_to_lease_info()
+            # Navigate to lease page and process listings
             lease_driver = LeaseDriver(self.web_driver)
+            lease_driver.go_to_lease_info()
             lease_driver.process_lease_listings(address_entry)
+
             controller.report_square_footage_retrieved()
             controller.report_rent_range_retrieved()
             controller.report_contact_information_retrieved()
             controller.report_address_processed()
             address_processed_count += 1
             controller.update_listings_processed(address_processed_count)
+            # TODO navigate back to address page
 
         self.excel_processor.generate_post_processed_file()
         controller.report_processed_file_complete()

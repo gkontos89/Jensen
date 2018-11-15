@@ -36,7 +36,7 @@ class Jensen(Tk):
         frame.tkraise()
         if isinstance(frame, ProcessingFrame):
             client_name = kwargs['client_name']
-            form = kwargs['form']
+            form = kwargs['form_name']
             frame.start_processing(client_name, form)
         elif isinstance(frame, WaitingForQrFrame):
             frame.start_waiting_for_qr()

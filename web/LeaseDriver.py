@@ -2,6 +2,14 @@ class LeaseDriver:
     def __init__(self, web_driver_handle):
         self.web_driver_handle = web_driver_handle
 
+    def go_to_lease_info(self):
+        tabs_block = self.web_driver_handle.find_element_by_id('htmlTabsBlock')
+        tabs_table = tabs_block.find_element_by_class_name('fusion-tab-detail-container')
+        tab_row = tabs_table.find_element_by_tag_name('tr')
+        tabs = tab_row.find_elements_by_tag_name('td')
+        lease_tab_element = tabs[1]
+        lease_tab_element.click()
+
     def process_lease_listings(self, address_entry):
         """
 

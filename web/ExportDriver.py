@@ -5,6 +5,7 @@ from web.element.export.ExportFileTypeElement import ExportFileTypeElement
 
 
 class ExportDriver:
+    # TODO clean up with new export elements
     def __init__(self, web_driver_handle):
         self.web_driver_handle = web_driver_handle
         self.export_element = None
