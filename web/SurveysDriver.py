@@ -67,8 +67,7 @@ class SurveysDriver:
 
         # Grab the plus and minus signs
         plus_signs = self.client_list_body_element.find_elements_by_xpath("//img[@data-bind='visible: !displayRequirements() && numOfRequirements() > 0']")
-        # TODO get minus_signs
-        minus_signs = []
+        minus_signs = self.client_list_body_element.find_elements_by_xpath("//img[@data-bind='visible: displayRequirements() && numOfRequirements() > 0']")
 
         # Create the client entries
         for i in range(0, len(client_rows)):

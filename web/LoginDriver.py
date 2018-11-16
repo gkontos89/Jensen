@@ -1,10 +1,5 @@
 from selenium.webdriver.common.keys import Keys
 
-USERNAME_ID = 'username'
-PASSWORD_ID = 'password'
-LOGIN_BUTTON_ID = 'loginButton'
-LOGIN_LINK_TEXT = 'Login'
-
 
 class LoginDriver:
     def __init__(self, web_driver_handle):
@@ -15,7 +10,7 @@ class LoginDriver:
         Navigates to the login screen
         :return:
         """
-        go_to_login_element = self.web_driver_handle.find_element_by_link_text(LOGIN_LINK_TEXT)
+        go_to_login_element = self.web_driver_handle.find_element_by_link_text('Login')
         go_to_login_element.click()
 
     def login(self, username, password):
@@ -25,9 +20,9 @@ class LoginDriver:
         :param password:
         :return:
         """
-        username_element = self.web_driver_handle.find_element_by_id(USERNAME_ID)
-        password_element = self.web_driver_handle.find_element_by_id(PASSWORD_ID)
-        login_button_element = self.web_driver_handle.find_element_by_id(LOGIN_BUTTON_ID)
+        username_element = self.web_driver_handle.find_element_by_id('username')
+        password_element = self.web_driver_handle.find_element_by_id('password')
+        login_button_element = self.web_driver_handle.find_element_by_id('loginButton')
 
         username_element.send_keys(Keys.CONTROL + 'a')
         username_element.send_keys(Keys.DELETE)
@@ -35,7 +30,7 @@ class LoginDriver:
 
         password_element.send_keys(Keys.CONTROL + 'a')
         password_element.send_keys(Keys.DELETE)
-        password_element.send_keyws(password)
+        password_element.send_keys(password)
 
         login_button_element.click()
 

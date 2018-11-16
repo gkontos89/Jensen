@@ -54,7 +54,7 @@ class CoreDriver:
         self.export_driver.export_data()
         controller.show_continue_export_button()
 
-    def process_client_entry(self, controller, client_name, form):
+    def process_client_entry(self, controller, form):
         """
         This will process a client's form all the way through exporting the data to csv, xls, ect. and then
         post processing the data into a properly formatted xlsx file
@@ -64,15 +64,18 @@ class CoreDriver:
         :param form: the form entry created underneath the client name
         :return: N/A
         """
+        self.export_driver.close_export_window()
+
         # Process exported file
         self.excel_processor = ExcelProcessor()
         # Find out the file location based on OS
         download_path = None
+        extension = self.export_driver.export_file_type_extension
         if platform.system() == 'Windows':
-            download_path = os.path.join('C:\\Users', getpass.getuser(), 'Downloads', 'Export' + form + '.xls')
+            download_path = os.path.join('C:\\Users', getpass.getuser(), 'Downloads', 'Export' + form + extension)
             # TODO figure out download location for MAC
 
-        self.excel_processor.pre_process_file(download_path)  # TODO figure out extension
+        self.excel_processor.pre_process_file(download_path)
         controller.report_pre_processed_data_complete()
 
         '''
@@ -105,7 +108,11 @@ class CoreDriver:
             controller.report_address_processed()
             address_processed_count += 1
             controller.update_listings_processed(address_processed_count)
-            # TODO navigate back to address page
+
+            # Navigate back to address listings
+            masthead = self.web_driver.find_element_by_class_name('masthead-back-link')
+            back_link = masthead.find_element_by_tag_name('span')
+            back_link.click()
 
         self.excel_processor.generate_post_processed_file()
         controller.report_processed_file_complete()
@@ -119,14 +126,14 @@ class CoreDriver:
     def testing_only_quick_login(self):
         self.configure_web_driver(WebBrowser.FIREFOX)
         self.go_to_costar()
-        login_driver = LoginDriver(self)
+        login_driver = LoginDriver(self.web_driver)
         login_driver.go_to_login_screen()
         login_driver.login('sam.jensen@bairdwarner.com', 'develop23')
 
     def testing_only_quick_login_chrome(self):
         self.configure_web_driver(WebBrowser.CHROME)
         self.go_to_costar()
-        login_driver = LoginDriver(self)
+        login_driver = LoginDriver(self.web_driver)
         login_driver.go_to_login_screen()
         login_driver.login('sam.jensen@bairdwarner.com', 'develop23')
 
