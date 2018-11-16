@@ -1,6 +1,6 @@
 import platform
 import subprocess
-from tkinter import Button, Label, Tk, Frame, LabelFrame, S, W, LEFT
+from tkinter import Button, Label, Tk, LabelFrame
 
 from gui.BaseFrame import BaseFrame
 from gui.ProcessingProgressBar import ProcessingProgressBar
@@ -29,6 +29,7 @@ class ProcessingFrame(BaseFrame):
         self.processed_listings_track_text = Label(self.processing_progress_frame)
         self.processing_progress_bar = ProcessingProgressBar(self.processing_progress_frame)
         self.processed_file_complete_text = Label(self.processing_progress_frame)
+        self.cancel_button = Button(self, text='Cancel', command=self.cancel_button_command)
         self.finished_button = Button(self, text='Finished', command=self.finished_button_command)
         self.view_processed_file_button = Button(self, text='View processed file',
                                                  command=self.view_processed_file_button_command)
@@ -48,6 +49,7 @@ class ProcessingFrame(BaseFrame):
         self.processed_file_complete_text.pack()
         self.processing_status_frame.pack()
         self.processing_progress_frame.pack()
+        self.cancel_button.pack()
         self.view_processed_file_button.pack()
         self.finished_button.pack()
         # TODO cancel button
@@ -56,7 +58,7 @@ class ProcessingFrame(BaseFrame):
         self.reset_processing_screen()
         self.current_client_name = client_name
         self.current_form_name = form
-        self.driver.initiate_data_export(self, client_name, form)
+        self.driver.initiate_data_export(self, form)
 
     def reset_processing_screen(self):
         self.continue_export_button.pack_forget()
@@ -103,7 +105,6 @@ class ProcessingFrame(BaseFrame):
         self.pre_processed_data_complete_text.config(text='Pre-process exported data complete...')
 
     def report_square_footage_retrieved(self):
-        # TODO handle list
         self.square_footage_retrieved_text.config(text='Square footage retrieved...')
 
     def report_rent_range_retrieved(self):
@@ -118,9 +119,9 @@ class ProcessingFrame(BaseFrame):
     def report_processed_file_complete(self):
         self.processing_progress_bar.increment_step()
         self.processed_file_complete_text.config(text='Processed file complete!')
+        self.cancel_button.pack_forget()
         self.view_processed_file_button.pack()
         self.finished_button.pack()
-        # TODO hide cancel button
 
     def show_continue_export_button(self):
         self.continue_export_button.pack()
@@ -128,6 +129,9 @@ class ProcessingFrame(BaseFrame):
 
     def continue_export_button_command(self):
         self.driver.process_client_entry(self, self.current_client_name, self.current_form_name)
+
+    def cancel_button_command(self):
+        pass
 
     def view_processed_file_button_command(self):
         processed_file_name = self.driver.get_processed_file_name()

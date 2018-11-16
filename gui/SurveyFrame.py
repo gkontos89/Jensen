@@ -1,4 +1,4 @@
-from tkinter import Button, Listbox, Scrollbar, VERTICAL, LEFT, Tk, Y, RIGHT, Frame
+from tkinter import Button, Listbox, Scrollbar, LEFT, Tk, Y, Frame
 
 from gui.BaseFrame import BaseFrame
 from web.SurveysDriver import SurveysDriver
@@ -53,11 +53,11 @@ class SurveyFrame(BaseFrame):
             self.forms_list_box.insert('end', form)
 
     def process_form_button_command(self):
-        # TODO throw error for no selection
         client_name = self.client_list_box.get(self.client_list_box.curselection())
         form_name = self.forms_list_box.get(self.forms_list_box.curselection())
-        self.surveys_driver.select_client_entry_form(form_name)
-        self.controller.show_frame('ProcessingFrame', client_name=client_name, form_name=form_name)
+        if form_name is not None:
+            self.surveys_driver.select_client_entry_form(form_name)
+            self.controller.show_frame('ProcessingFrame', client_name=client_name, form_name=form_name)
 
 
 if __name__ == '__main__':

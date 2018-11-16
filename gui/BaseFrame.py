@@ -4,7 +4,7 @@ from gui.JensenBanner import JensenBanner
 
 
 class BaseFrame(Frame):
-    def __init__(self, parent, width, height=None):
+    def __init__(self, parent, width):
         super().__init__(parent)
         self.master = parent
         self.jensen_banner = JensenBanner(self, banner_width=width)

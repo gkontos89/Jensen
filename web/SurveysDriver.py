@@ -66,8 +66,10 @@ class SurveysDriver:
                 client_rows.append(client_light_rows[i])
 
         # Grab the plus and minus signs
-        plus_signs = self.client_list_body_element.find_elements_by_xpath("//img[@data-bind='visible: !displayRequirements() && numOfRequirements() > 0']")
-        minus_signs = self.client_list_body_element.find_elements_by_xpath("//img[@data-bind='visible: displayRequirements() && numOfRequirements() > 0']")
+        plus_signs = self.client_list_body_element.\
+            find_elements_by_xpath("//img[@data-bind='visible: !displayRequirements() && numOfRequirements() > 0']")
+        minus_signs = self.client_list_body_element.\
+            find_elements_by_xpath("//img[@data-bind='visible: displayRequirements() && numOfRequirements() > 0']")
 
         # Create the client entries
         for i in range(0, len(client_rows)):
@@ -97,7 +99,8 @@ class SurveysDriver:
         if client_entry.forms is None:
             client_entry.add_form_web_elements([row for row in new_snap_shot_trs if row not in self.base_tr_snapshot])
 
-        self.base_tr_snapshot = self.base_tr_snapshot + [row for row in new_snap_shot_trs if row not in self.base_tr_snapshot]
+        self.base_tr_snapshot = self.base_tr_snapshot + \
+            [row for row in new_snap_shot_trs if row not in self.base_tr_snapshot]
         self.active_client_entry = client_entry
         return client_entry.get_form_names()
 

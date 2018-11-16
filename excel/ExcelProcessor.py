@@ -13,8 +13,6 @@ class ExcelProcessor:
         self.processed_work_book = None
         self.processed_work_sheet = None
 
-        # TODO remove protected mode
-
     def pre_process_file(self, exported_file_name):
         self.processed_file_name = exported_file_name.split('.')[0] + '_Processed.xlsx'
 

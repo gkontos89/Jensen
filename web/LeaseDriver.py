@@ -13,7 +13,7 @@ class LeaseDriver:
     def process_lease_listings(self, address_entry):
         """
 
-        :param address_entry: reference to an AddressEntry type to add information to from the webpage
+        :param address_entry: reference to an AddressEntry type to add information to from the web page
         :return:
         """
         # grab number of listings in the window to keep index track
@@ -46,11 +46,15 @@ class LeaseDriver:
 
                     # only grab mobile phone
                     phone = None
-                    phone_numbers_container = contact_box.find_element_by_xpath("//div[@class='section contact-details']//div[@data-bind='foreach: PhoneNumbers.Items']")
+                    phone_numbers_container = contact_box.\
+                        find_element_by_xpath("//div[@class='section contact-details']//div[@data-bind='foreach: "
+                                              "PhoneNumbers.Items']")
                     phone_number_elements = phone_numbers_container.find_elements_by_tag_name('div')
                     for phone_number_element in phone_number_elements:
-                        if phone_number_element.find_element_by_xpath("//span[@data-bind='textWithTitle: Desc']").text == '(m)':
-                            phone = phone_number_element.find_element_by_xpath("//span[@data-bind='textWithTitle: Number']").text
+                        if phone_number_element.\
+                                find_element_by_xpath("//span[@data-bind='textWithTitle: Desc']").text == '(m)':
+                            phone = phone_number_element.\
+                                find_element_by_xpath("//span[@data-bind='textWithTitle: Number']").text
 
                     email = contact_box.find_element_by_tag_name('a').text
                     address_entry.add_contact(name=name, email=email, phone=phone)

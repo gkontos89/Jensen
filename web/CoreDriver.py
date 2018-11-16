@@ -2,14 +2,14 @@ import getpass
 import os
 import platform
 from enum import Enum
+
 from selenium import webdriver
 
 from excel.ExcelProcessor import ExcelProcessor
 from web.AddressTableDriver import AddressTableDriver
-from web.ExportDriver import ExportDriver
+from web.ExportDriver import ExportDriver, ExportFileType
 from web.LeaseDriver import LeaseDriver
 from web.LoginDriver import LoginDriver
-from web.element.export.ExportFileTypeElement import ExportFileType
 
 
 class WebBrowser(Enum):
@@ -46,11 +46,11 @@ class CoreDriver:
         surveys_element = self.web_driver.find_element_by_link_text('Surveys')
         surveys_element.click()
 
-    def initiate_data_export(self, controller, export_file_type=ExportFileType.MICROSOFT_EXCEL_FILE):
+    def initiate_data_export(self, controller):
         self.export_driver = ExportDriver(self.web_driver)
         self.export_driver.go_to_export_screen()
         self.export_driver.select_custom_export_filter('Retail 1')
-        self.export_driver.select_export_file_type(export_file_type)
+        self.export_driver.select_export_file_type(ExportFileType.MICROSOFT_EXCEL_FILE)
         self.export_driver.export_data()
         controller.show_continue_export_button()
 
@@ -60,7 +60,6 @@ class CoreDriver:
         post processing the data into a properly formatted xlsx file
 
         :param controller: handle to frame that contains elements for updating a GUI for progress
-        :param client_name:  name of the client as in the table
         :param form: the form entry created underneath the client name
         :return: N/A
         """

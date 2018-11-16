@@ -58,6 +58,6 @@ if __name__ == '__main__':
     root.geometry('500x500')
     # root.resizable(0, 0)
 
-    base_frame = BrowserSelectionFrame(root, 50)
+    base_frame = BrowserSelectionFrame(root, root, 50)
     base_frame.pack()
     root.mainloop()
