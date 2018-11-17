@@ -12,7 +12,7 @@ class LoginFrame(BaseFrame):
         self.parent = parent
         self.controller = controller
         self.driver = driver
-        self.login_driver = LoginDriver(driver)
+        self.login_driver = LoginDriver(self.driver)
         self.username_label = Label(self, text='Username')
         self.username_text_entry = Entry(self, width='50')
         self.username_text_entry.insert(0, 'sam.jensen@bairdwarner.com')  # TODO get default from file or pickle

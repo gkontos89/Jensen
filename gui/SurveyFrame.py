@@ -10,7 +10,7 @@ class SurveyFrame(BaseFrame):
         self.parent = parent
         self.controller = controller
         self.driver = driver
-        self.surveys_driver = SurveysDriver(driver)
+        self.surveys_driver = SurveysDriver(self.driver)
         self.client_list_frame = Frame(self)
         self.form_list_frame = Frame(self)
         self.processing_frame = Frame(self)
@@ -38,6 +38,7 @@ class SurveyFrame(BaseFrame):
 
     def collect_surveys_button_command(self):
         self.client_list_box.delete(0, 'end')
+        self.surveys_driver.reset_driver()
         self.surveys_driver.attach_to_survey_page()
         client_entry_names = self.surveys_driver.get_client_entry_names()
         for client_entry_name in client_entry_names:
@@ -53,8 +54,8 @@ class SurveyFrame(BaseFrame):
             self.forms_list_box.insert('end', form)
 
     def process_form_button_command(self):
-        client_name = self.client_list_box.get(self.client_list_box.curselection())
-        form_name = self.forms_list_box.get(self.forms_list_box.curselection())
+        client_name = self.client_list_box.get(self.client_list_box.curselection()[0])
+        form_name = self.forms_list_box.get(self.forms_list_box.curselection()[0])
         if form_name is not None:
             self.surveys_driver.select_client_entry_form(form_name)
             self.controller.show_frame('ProcessingFrame', client_name=client_name, form_name=form_name)

@@ -4,6 +4,7 @@ import platform
 from enum import Enum
 
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 
 from excel.ExcelProcessor import ExcelProcessor
 from web.AddressTableDriver import AddressTableDriver
@@ -41,6 +42,13 @@ class CoreDriver:
     def open_menu(self):
         menu_element = self.web_driver.find_element_by_id('csgp-menu-label')
         menu_element.click()
+
+    def home_page_has_loaded(self):
+        try:
+            self.web_driver.find_element_by_id('csgp-menu-label')
+            return True
+        except NoSuchElementException:
+            return False
 
     def go_to_surveys(self):
         surveys_element = self.web_driver.find_element_by_link_text('Surveys')

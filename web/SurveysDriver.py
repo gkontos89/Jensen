@@ -30,8 +30,16 @@ class ClientEntry:
 
 
 class SurveysDriver:
-    def __init__(self, web_driver_handle):
-        self.web_driver_handle = web_driver_handle
+    def __init__(self, driver):
+        self.driver = driver
+        self.client_entries = dict()
+        self.active_client_entry = None
+        self.base_tr_snapshot = None
+        self.surveyIFrame = None
+        self.client_list_element = None
+        self.client_list_body_element = None
+
+    def reset_driver(self):
         self.client_entries = dict()
         self.active_client_entry = None
         self.base_tr_snapshot = None
@@ -46,9 +54,9 @@ class SurveysDriver:
         :return:
         """
         # Attach to web elements
-        self.surveyIFrame = self.web_driver_handle.find_element_by_id('htmlMySurveysIFrame')
-        self.web_driver_handle.switch_to.frame(self.surveyIFrame)
-        self.client_list_element = self.web_driver_handle.find_element_by_id('theClientList')
+        self.surveyIFrame = self.driver.web_driver.find_element_by_id('htmlMySurveysIFrame')
+        self.driver.web_driver.switch_to.frame(self.surveyIFrame)
+        self.client_list_element = self.driver.web_driver.find_element_by_id('theClientList')
         self.client_list_body_element = self.client_list_element.find_element_by_tag_name('tbody')
 
         # Take snap shot of the rows
@@ -112,5 +120,5 @@ class SurveysDriver:
         """
         if self.active_client_entry is not None:
             self.active_client_entry.access_form(form_name)
-            self.web_driver_handle.switch_to.default_content()
+            self.driver.web_driver.switch_to.default_content()
 

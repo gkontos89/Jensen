@@ -5,6 +5,7 @@ from tkinter import Tk, Frame
 from gui.BrowserSelectionFrame import BrowserSelectionFrame
 from gui.LoginFrame import LoginFrame
 from gui.ProcessingFrame import ProcessingFrame
+from gui.SurveyFrame import SurveyFrame
 from gui.WaitingForQrFrame import WaitingForQrFrame
 from web.CoreDriver import CoreDriver
 
@@ -23,7 +24,7 @@ class Jensen(Tk):
         if driver_path not in current_path:
             os.environ['Path'] += os.pathsep + driver_path
 
-        for frame in (BrowserSelectionFrame, LoginFrame, ProcessingFrame, WaitingForQrFrame):
+        for frame in (BrowserSelectionFrame, LoginFrame, ProcessingFrame, WaitingForQrFrame, SurveyFrame):
             frame_name = frame.__name__
             f = frame(parent=self.main_container, controller=self, width=50, driver=self.driver)
             self.frames[frame_name] = f
@@ -38,8 +39,8 @@ class Jensen(Tk):
             client_name = kwargs['client_name']
             form = kwargs['form_name']
             frame.start_processing(client_name, form)
-        elif isinstance(frame, WaitingForQrFrame):
-            frame.start_waiting_for_qr()
+        # elif isinstance(frame, WaitingForQrFrame):
+        #     frame.start_waiting_for_qr()
 
 
 if __name__ == '__main__':
