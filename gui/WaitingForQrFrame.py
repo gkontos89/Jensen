@@ -13,20 +13,22 @@ class WaitingForQrFrame(BaseFrame):
         self.go_to_surveys_button = Button(self, text='Go to Surveys', command=self.go_to_surveys_button_command)
         self.waiting_for_login_text.pack()
         self.waiting_for_login_text.pack_forget()
-        self.go_to_surveys_button.pack()
+        self.go_to_surveys_button.pack_forget()
 
     def start_waiting_for_qr(self):
         self.waiting_for_login_text.pack()
-        self.go_to_surveys_button.pack_forget()
         while not self.driver.home_page_has_loaded():
             # Sit and wait for the home page to load
             pass
 
+        self.waiting_for_login_text.pack_forget()
+        self.go_to_surveys_button.pack()
+
     def go_to_surveys_button_command(self):
-        self.waiting_for_login_text.pack()
-        while not self.driver.home_page_has_loaded():
-            # Sit and wait for the home page to load
-            pass
+        # self.waiting_for_login_text.pack()
+        # while not self.driver.home_page_has_loaded():
+        #     # Sit and wait for the home page to load
+        #     pass
         self.driver.open_menu()
         self.driver.go_to_surveys()
         self.controller.show_frame('SurveyFrame')

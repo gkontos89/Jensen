@@ -1,3 +1,6 @@
+import time
+
+
 class ClientEntry:
     def __init__(self, name, plus_sign, minus_sign):
         self.client_name = name
@@ -99,12 +102,16 @@ class SurveysDriver:
         :return: list of forms
         """
         if self.active_client_entry is not None:
-            self.active_client_entry.collapse_client_forms()
+            try:
+                self.active_client_entry.collapse_client_forms()
+            except:
+                pass  # TODO just pass for now, this could be if something does not get expanded
 
         client_entry = self.client_entries[client_name]
         client_entry.expand_client_forms()
+        time.sleep(2)
         new_snap_shot_trs = self.client_list_body_element.find_elements_by_tag_name('tr')
-        if client_entry.forms is None:
+        if client_entry.forms is None or len(client_entry.forms) == 0:
             client_entry.add_form_web_elements([row for row in new_snap_shot_trs if row not in self.base_tr_snapshot])
 
         self.base_tr_snapshot = self.base_tr_snapshot + \

@@ -1,5 +1,6 @@
 import os
 import platform
+import threading
 from tkinter import Tk, Frame
 
 from gui.BrowserSelectionFrame import BrowserSelectionFrame
@@ -38,9 +39,10 @@ class Jensen(Tk):
         if isinstance(frame, ProcessingFrame):
             client_name = kwargs['client_name']
             form = kwargs['form_name']
-            frame.start_processing(client_name, form)
-        # elif isinstance(frame, WaitingForQrFrame):
-        #     frame.start_waiting_for_qr()
+            frame.prepare_for_processing(client_name, form)
+        elif isinstance(frame, WaitingForQrFrame):
+            thread = threading.Thread(target=frame.start_waiting_for_qr)
+            thread.start()
 
 
 if __name__ == '__main__':

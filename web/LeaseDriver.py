@@ -3,11 +3,12 @@ class LeaseDriver:
         self.web_driver_handle = web_driver_handle
 
     def go_to_lease_info(self):
-        tabs_block = self.web_driver_handle.find_element_by_id('htmlTabsBlock')
-        tabs_table = tabs_block.find_element_by_class_name('fusion-tab-detail-container')
-        tab_row = tabs_table.find_element_by_tag_name('tr')
-        tabs = tab_row.find_elements_by_tag_name('td')
-        lease_tab_element = tabs[1]
+        # tabs_block = self.web_driver_handle.find_element_by_id('tabs')
+        # tabs_table = tabs_block.find_element_by_class_name('fusion-tab-detail-container')
+        # tab_row = tabs_table.find_element_by_tag_name('tr')
+        # tabs = tab_row.find_elements_by_tag_name('td')
+        # lease_tab_element = tabs[1]
+        lease_tab_element = self.web_driver_handle.find_element_by_link_text('Lease')
         lease_tab_element.click()
 
     def process_lease_listings(self, address_entry):
@@ -31,7 +32,7 @@ class LeaseDriver:
                 # grab rent
                 rent = self.web_driver_handle.find_element_by_id('Rent_Display')
                 rent_text = rent.find_element_by_xpath("//span[@data-bind='textWithTitle: Rent.Display']")
-                address_entry.set_acutal_rent(rent_text)  # TODO find out if you need multiple rents
+                address_entry.set_actual_rent(rent_text)  # TODO find out if you need multiple rents
 
                 # grab square
                 square_footage = self.web_driver_handle.find_element_by_id('AvailableArea')

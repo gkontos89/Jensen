@@ -15,14 +15,14 @@ class SurveyFrame(BaseFrame):
         self.form_list_frame = Frame(self)
         self.processing_frame = Frame(self)
         self.collect_surveys_button = Button(self, text='Collect Surveys', command=self.collect_surveys_button_command)
-        self.client_list_box = Listbox(self.client_list_frame, height=10, width=35)
-        self.client_list_box.insert('end', 'hello')
+        self.client_list_box = Listbox(self.client_list_frame, height=10, width=35, exportselection=0,
+                                       selectmode='single')
         self.client_list_box.bind('<<ListboxSelect>>', self.on_client_selection)
         self.client_list_scrollbar = Scrollbar(self.client_list_frame, command=self.client_list_box.yview)
         self.client_list_box.config(yscrollcommand=self.client_list_scrollbar.set)
-        self.forms_list_box = Listbox(self.form_list_frame, height=10, width=35)
+        self.forms_list_box = Listbox(self.form_list_frame, height=10, width=35, exportselection=0, selectmode='single')
         self.forms_list_scrollbar = Scrollbar(self.form_list_frame, command=self.forms_list_box.yview)
-        self.process_form_button = Button(self.processing_frame, text='Process Form',
+        self.process_form_button = Button(self.processing_frame, text='Continue',
                                           command=self.process_form_button_command)
 
         # Packing
@@ -38,6 +38,7 @@ class SurveyFrame(BaseFrame):
 
     def collect_surveys_button_command(self):
         self.client_list_box.delete(0, 'end')
+        self.forms_list_box.delete(0, 'end')
         self.surveys_driver.reset_driver()
         self.surveys_driver.attach_to_survey_page()
         client_entry_names = self.surveys_driver.get_client_entry_names()
@@ -45,20 +46,26 @@ class SurveyFrame(BaseFrame):
             self.client_list_box.insert('end', client_entry_name)
 
     def on_client_selection(self, evt):
-        widget = evt.widget
-        index = int(widget.curselection()[0])
-        value = widget.get(index)
-        self.forms_list_box.delete(0, 'end')
-        forms = self.surveys_driver.expand_client_entry_and_get_forms(value)
-        for form in forms:
-            self.forms_list_box.insert('end', form)
+        try:
+            widget = evt.widget
+            index = int(widget.curselection()[0])
+            value = widget.get(index)
+            self.forms_list_box.delete(0, 'end')
+            forms = self.surveys_driver.expand_client_entry_and_get_forms(value)
+            for form in forms:
+                self.forms_list_box.insert('end', form)
+        except:
+            print('Client selection failed')
 
     def process_form_button_command(self):
-        client_name = self.client_list_box.get(self.client_list_box.curselection()[0])
-        form_name = self.forms_list_box.get(self.forms_list_box.curselection()[0])
-        if form_name is not None:
-            self.surveys_driver.select_client_entry_form(form_name)
-            self.controller.show_frame('ProcessingFrame', client_name=client_name, form_name=form_name)
+        try:
+            client_name = self.client_list_box.get(self.client_list_box.curselection()[0])
+            form_name = self.forms_list_box.get(self.forms_list_box.curselection()[0])
+            if form_name is not None:
+                self.surveys_driver.select_client_entry_form(form_name)
+                self.controller.show_frame('ProcessingFrame', client_name=client_name, form_name=form_name)
+        except:
+            print('Process form failed')
 
 
 if __name__ == '__main__':
@@ -67,5 +74,8 @@ if __name__ == '__main__':
     # root.resizable(0, 0)
 
     base_frame = SurveyFrame(root, root, 50)
+    base_frame.client_list_box.insert('end', 'hello')
+    base_frame.client_list_box.insert('end', 'yay')
+    base_frame.client_list_box.insert('end', 'bye')
     base_frame.pack()
     root.mainloop()

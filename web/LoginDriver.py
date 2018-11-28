@@ -40,5 +40,6 @@ class LoginDriver:
         should be ready to handle the error
         :return: throws error
         """
+        # TODO move this wait to the setup
         self.driver.web_driver.implicitly_wait(10)
         self.driver.web_driver.find_element_by_class_name('instruction-message-container2')

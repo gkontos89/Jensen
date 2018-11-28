@@ -1,5 +1,7 @@
 import platform
 import subprocess
+import threading
+import time
 from tkinter import Button, Label, Tk, LabelFrame
 
 from gui.BaseFrame import BaseFrame
@@ -17,6 +19,10 @@ class ProcessingFrame(BaseFrame):
         self.number_of_listings_to_process = -1
         self.processing_status_frame = LabelFrame(self, text='Processing', width=50, pady=20)
         self.processing_progress_frame = LabelFrame(self, text='Overall Progress', width=50)
+        self.client_name_text = Label(self.processing_status_frame, text='')
+        self.form_name_text = Label(self.processing_status_frame, text='')
+        self.start_processing_button = Button(self.processing_status_frame, text='Start Processing',
+                                              command=self.start_processing)
         self.continue_export_button = Button(self.processing_status_frame, text='Click after export is complete...',
                                              command=self.continue_export_button_command)
         self.exporting_data_text = Label(self.processing_status_frame)
@@ -34,8 +40,10 @@ class ProcessingFrame(BaseFrame):
         self.view_processed_file_button = Button(self, text='View processed file',
                                                  command=self.view_processed_file_button_command)
 
+        self.client_name_text.pack()
+        self.form_name_text.pack()
+        self.start_processing_button.pack()
         self.continue_export_button.pack()
-        self.continue_export_button.pack_forget()
         self.exporting_data_text.pack()
         self.number_of_listings_found_text.pack()
         self.processing_address_text.pack()
@@ -54,13 +62,28 @@ class ProcessingFrame(BaseFrame):
         self.finished_button.pack()
         # TODO cancel button
 
-    def start_processing(self, client_name, form):
+    def prepare_for_processing(self, client_name, form):
         self.reset_processing_screen()
         self.current_client_name = client_name
         self.current_form_name = form
-        self.driver.initiate_data_export(self, form)
+        self.client_name_text.config(text=self.current_client_name)
+        self.form_name_text.config(text=self.current_form_name)
+        self.start_processing_button.pack()
+
+    def start_processing(self):
+        self.start_processing_button.pack_forget()
+        try:
+            data_export_thread = threading.Thread(target=self.driver.initiate_data_export,
+                                                  args=[self])
+            data_export_thread.start()
+        except:
+            print('whoops')
+            pass
 
     def reset_processing_screen(self):
+        self.client_name_text.config(text='')
+        self.form_name_text.config(text='')
+        self.start_processing_button.pack_forget()
         self.continue_export_button.pack_forget()
         self.exporting_data_text.config(text='')
         self.number_of_listings_found_text.config(text='')
@@ -128,7 +151,9 @@ class ProcessingFrame(BaseFrame):
         self.report_exporting_data_complete()
 
     def continue_export_button_command(self):
-        self.driver.process_client_entry(self, self.current_client_name, self.current_form_name)
+        process_client_thread = threading.Thread(target=self.driver.process_client_entry,
+                                                 args=[self])
+        process_client_thread.start()
 
     def cancel_button_command(self):
         pass
@@ -148,6 +173,7 @@ if __name__ == '__main__':
     root = Tk()
     root.geometry('500x500')
     pf = ProcessingFrame(root, root, 50)
+    pf.continue_export_button.pack()
     pf.report_exporting_data_complete()
     pf.report_number_of_listings_found(25)
     pf.update_name_of_processing_address('my address')

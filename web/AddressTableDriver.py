@@ -13,6 +13,7 @@ class AddressTableDriver:
         address_rows = self.address_table.find_elements_by_class_name('fixedDataTableRowLayout_rowWrapper')
         # Remove top row that comes with it for some reason
         address_rows = address_rows[1:]
+        self.address_entries = {}
         for address_row in address_rows:
             address_link = address_row.find_element_by_tag_name('span')
             self.address_entries[address_link.text] = address_link

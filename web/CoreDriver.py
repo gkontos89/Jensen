@@ -1,3 +1,4 @@
+import datetime
 import getpass
 import os
 import platform
@@ -62,27 +63,19 @@ class CoreDriver:
         self.export_driver.export_data()
         controller.show_continue_export_button()
 
-    def process_client_entry(self, controller, form):
+    def process_client_entry(self, controller):
         """
         This will process a client's form all the way through exporting the data to csv, xls, ect. and then
         post processing the data into a properly formatted xlsx file
 
         :param controller: handle to frame that contains elements for updating a GUI for progress
-        :param form: the form entry created underneath the client name
         :return: N/A
         """
         self.export_driver.close_export_window()
 
         # Process exported file
         self.excel_processor = ExcelProcessor()
-        # Find out the file location based on OS
-        download_path = None
-        extension = self.export_driver.export_file_type_extension
-        if platform.system() == 'Windows':
-            download_path = os.path.join('C:\\Users', getpass.getuser(), 'Downloads', 'Export' + form + extension)
-            # TODO figure out download location for MAC
-
-        self.excel_processor.pre_process_file(download_path)
+        self.excel_processor.pre_process_file(self.export_driver.export_file_name)
         controller.report_pre_processed_data_complete()
 
         '''
@@ -101,6 +94,7 @@ class CoreDriver:
             # Grab the table and find the correct address link
             # Go to address page
             address_table_driver = AddressTableDriver(self.web_driver)
+            address_table_driver.select_list_view()
             address_table_driver.attach_to_address_table()
             address_table_driver.go_to_address_page(address)
 

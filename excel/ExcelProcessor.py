@@ -15,7 +15,6 @@ class ExcelProcessor:
 
     def pre_process_file(self, exported_file_name):
         self.processed_file_name = exported_file_name.split('.')[0] + '_Processed.xlsx'
-
         # Handle .xls format, which is actually HTML out of co-star
         if exported_file_name.split('.')[1] == 'xls':
             data = pandas.read_html(exported_file_name)[0]
@@ -134,6 +133,7 @@ class ExcelProcessor:
 
 if __name__ == '__main__':
     excel_processor = ExcelProcessor()
+    # download_path = os.path.join('C:\\Users', getpass.getuser(), 'Downloads', 'Export' + '112718' + '.xls')
     excel_processor.pre_process_file('C:\\JensenProperties\\export.xls')
     excel_processor.address_entries['875 N Michigan Ave'].add_square_footage(4000)
     excel_processor.address_entries['875 N Michigan Ave'].add_square_footage(460)
