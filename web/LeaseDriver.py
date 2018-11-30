@@ -60,7 +60,8 @@ class LeaseDriver:
                     email = contact_box.find_element_by_tag_name('a').text
                     address_entry.add_contact(name=name, email=email, phone=phone)
 
-            time.sleep(1)  # I hate doing this, but for some reason this can't be grabbed fast enough
+            time.sleep(1)  # I hate doing this, but for some reason the lease page isn't appearing fast enough
+
             go_back_button = self.web_driver_handle.find_element_by_class_name('go-back')
             '''
             Attempt 1

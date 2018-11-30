@@ -94,18 +94,12 @@ class CoreDriver:
             # Go to address page
             address_table_driver = AddressTableDriver(self.web_driver)
             address_table_driver.select_list_view()
-            address_table_driver.attach_to_address_table()
             address_table_driver.go_to_address_page(address)
 
             # Navigate to lease page and process listings
-            try:
-                lease_driver = LeaseDriver(self.web_driver)
-                lease_driver.go_to_lease_info()
-                lease_driver.process_lease_listings(address_entry)
-            except:
-                e = sys.exc_info()[0]
-                print(e)
-                pass
+            lease_driver = LeaseDriver(self.web_driver)
+            lease_driver.go_to_lease_info()
+            lease_driver.process_lease_listings(address_entry)
 
             controller.report_square_footage_retrieved()
             controller.report_rent_range_retrieved()
