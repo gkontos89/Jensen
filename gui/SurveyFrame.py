@@ -61,6 +61,8 @@ class SurveyFrame(BaseFrame):
         try:
             client_name = self.client_list_box.get(self.client_list_box.curselection()[0])
             form_name = self.forms_list_box.get(self.forms_list_box.curselection()[0])
+            self.client_list_box.delete(0, 'end')
+            self.forms_list_box.delete(0, 'end')
             if form_name is not None:
                 self.surveys_driver.select_client_entry_form(form_name)
                 self.controller.show_frame('ProcessingFrame', client_name=client_name, form_name=form_name)

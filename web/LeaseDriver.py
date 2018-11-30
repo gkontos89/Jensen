@@ -1,13 +1,13 @@
+import time
+
+from selenium.webdriver import ActionChains
+
+
 class LeaseDriver:
     def __init__(self, web_driver_handle):
         self.web_driver_handle = web_driver_handle
 
     def go_to_lease_info(self):
-        # tabs_block = self.web_driver_handle.find_element_by_id('tabs')
-        # tabs_table = tabs_block.find_element_by_class_name('fusion-tab-detail-container')
-        # tab_row = tabs_table.find_element_by_tag_name('tr')
-        # tabs = tab_row.find_elements_by_tag_name('td')
-        # lease_tab_element = tabs[1]
         lease_tab_element = self.web_driver_handle.find_element_by_link_text('Lease')
         lease_tab_element.click()
 
@@ -60,5 +60,24 @@ class LeaseDriver:
                     email = contact_box.find_element_by_tag_name('a').text
                     address_entry.add_contact(name=name, email=email, phone=phone)
 
+            time.sleep(1)  # I hate doing this, but for some reason this can't be grabbed fast enough
             go_back_button = self.web_driver_handle.find_element_by_class_name('go-back')
-            go_back_button.click()
+            '''
+            Attempt 1
+            go_back_button.click()  # cannot be scrolled into view
+            
+            Attempt 2
+            action = ActionChains(self.web_driver_handle)
+            action.move_to_element(go_back_button).perform()  # rect is undefined
+            action.click()
+            
+            Attempt 3
+            action = ActionChains(self.web_driver_handle)
+            action.move_to_element(go_back_button)
+            action.click()
+            action.perform()
+            '''
+            action = ActionChains(self.web_driver_handle)
+            action.move_to_element(go_back_button)
+            action.click()
+            action.perform()

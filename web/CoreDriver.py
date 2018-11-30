@@ -2,6 +2,7 @@ import datetime
 import getpass
 import os
 import platform
+import sys
 from enum import Enum
 
 from selenium import webdriver
@@ -79,11 +80,9 @@ class CoreDriver:
         controller.report_pre_processed_data_complete()
 
         '''
-        +1 for exporting the excel sheet
-        +1 for pre-processing export
         +1 for generating post processed excel sheet
         '''
-        number_of_steps = len(self.excel_processor.address_entries) + 3
+        number_of_steps = len(self.excel_processor.address_entries) + 1
         controller.set_number_of_processing_steps(number_of_steps)
         address_processed_count = 0
         total_addresses = len(self.excel_processor.address_entries)
@@ -99,9 +98,14 @@ class CoreDriver:
             address_table_driver.go_to_address_page(address)
 
             # Navigate to lease page and process listings
-            lease_driver = LeaseDriver(self.web_driver)
-            lease_driver.go_to_lease_info()
-            lease_driver.process_lease_listings(address_entry)
+            try:
+                lease_driver = LeaseDriver(self.web_driver)
+                lease_driver.go_to_lease_info()
+                lease_driver.process_lease_listings(address_entry)
+            except:
+                e = sys.exc_info()[0]
+                print(e)
+                pass
 
             controller.report_square_footage_retrieved()
             controller.report_rent_range_retrieved()
@@ -111,8 +115,7 @@ class CoreDriver:
             controller.update_listings_processed(address_processed_count)
 
             # Navigate back to address listings
-            masthead = self.web_driver.find_element_by_class_name('masthead-back-link')
-            back_link = masthead.find_element_by_tag_name('span')
+            back_link = self.web_driver.find_element_by_class_name('masthead-back-link')
             back_link.click()
 
         self.excel_processor.generate_post_processed_file()
@@ -127,14 +130,14 @@ class CoreDriver:
     def testing_only_quick_login(self):
         self.configure_web_driver(WebBrowser.FIREFOX)
         self.go_to_costar()
-        login_driver = LoginDriver(self.web_driver)
+        login_driver = LoginDriver(self)
         login_driver.go_to_login_screen()
         login_driver.login('sam.jensen@bairdwarner.com', 'develop23')
 
     def testing_only_quick_login_chrome(self):
         self.configure_web_driver(WebBrowser.CHROME)
         self.go_to_costar()
-        login_driver = LoginDriver(self.web_driver)
+        login_driver = LoginDriver(self)
         login_driver.go_to_login_screen()
         login_driver.login('sam.jensen@bairdwarner.com', 'develop23')
 
@@ -143,6 +146,14 @@ if __name__ == '__main__':
     driver = CoreDriver()
     driver.configure_web_driver(WebBrowser.FIREFOX)
     driver.go_to_costar()
+    '''
+    For testing in IDLE do the following:
+    import os
+    os.chdir("C:\\Jensen")
+    from web.CoreDriver import CoreDriver
+    cd = CoreDriver()
+    cd.testing_only_quick_login()
+    '''
 
 
 

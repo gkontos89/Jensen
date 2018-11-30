@@ -46,9 +46,8 @@ class ProcessingFrame(BaseFrame):
         self.continue_export_button.pack()
         self.exporting_data_text.pack()
         self.number_of_listings_found_text.pack()
-        self.processing_address_text.pack()
-        self.processing_address_text.pack()
         self.pre_processed_data_complete_text.pack()
+        self.processing_address_text.pack()
         self.square_footage_retrieved_text.pack()
         self.rent_range_retrieved_text.pack()
         self.contact_information_retrieved_text.pack()
@@ -154,8 +153,11 @@ class ProcessingFrame(BaseFrame):
         process_client_thread = threading.Thread(target=self.driver.process_client_entry,
                                                  args=[self])
         process_client_thread.start()
+        self.continue_export_button.pack_forget()
 
     def cancel_button_command(self):
+        self.reset_processing_screen()
+        self.controller.show_frame('SurveyFrame')
         pass
 
     def view_processed_file_button_command(self):
