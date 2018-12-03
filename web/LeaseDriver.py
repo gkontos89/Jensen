@@ -25,6 +25,7 @@ class LeaseDriver:
 
         # grab handles for navigation
         next_lease_button = self.web_driver_handle.find_element_by_class_name('right')
+        close_button = self.web_driver_handle.find_element_by_class_name('close close-icon')
         num_clicks = len(available_spaces) - 1  # take one out because the first one already appears
         for i in range(0, num_clicks):
             lease_element = self.web_driver_handle.find_element_by_id('LeaseType')
@@ -64,5 +65,4 @@ class LeaseDriver:
             time.sleep(1)  # I hate doing this, but for some reason the lease page isn't appearing fast enough
             next_lease_button.click()
 
-        close_button = self.web_driver_handle.find_element_by_class_name('close close-icon')
         close_button.click()
