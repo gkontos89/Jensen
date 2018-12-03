@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0a604e6f-a359-4e15-beb6-acccb313fb2f" name="Default Changelist" comment="">
+    <list default="true" id="35c5fbab-409c-4a78-8729-c91f58ac5127" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/Jensen.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Jensen.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/AddressTableDriver.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/AddressTableDriver.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/CoreDriver.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/CoreDriver.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/Scripts/runxlrd.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/pip-selfcheck.json" beforeDir="false" afterPath="$PROJECT_DIR$/venv/pip-selfcheck.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/LeaseDriver.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/LeaseDriver.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,64 +18,39 @@
     <session id="-2070046932">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="7" />
-          <entry key="project.open.time.1" value="1" />
-          <entry key="project.open.time.3" value="1" />
-          <entry key="project.open.time.4" value="4" />
-          <entry key="project.open.time.5" value="3" />
-          <entry key="project.open.time.6" value="2" />
-          <entry key="project.open.time.7" value="1" />
-          <entry key="project.opened" value="12" />
+          <entry key="project.open.time.8" value="1" />
+          <entry key="project.opened" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="gitignore" value="1" />
-          <entry key="log" value="1" />
-          <entry key="py" value="486" />
+          <entry key="py" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="PLAIN_TEXT" value="2" />
-          <entry key="Python" value="486" />
+          <entry key="Python" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="Python Console" value="76" />
-          <entry key="dummy" value="55" />
-          <entry key="py" value="49073" />
+          <entry key="py" value="307" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="55" />
-          <entry key="Python" value="49149" />
+          <entry key="Python" value="307" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+    <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gui/ProcessingFrame.py">
+        <entry file="file://$PROJECT_DIR$/web/LeaseDriver.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="943">
-              <caret line="152" column="72" selection-start-line="152" selection-start-column="72" selection-end-line="152" selection-end-column="72" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-                <marker date="1543602098828" expanded="true" signature="245:250" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/AddressTableDriver.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="36" column="73" selection-start-line="36" selection-start-column="73" selection-end-line="36" selection-end-column="73" />
+            <state relative-caret-position="143">
+              <caret line="13" column="15" lean-forward="true" selection-start-line="13" selection-start-column="15" selection-end-line="13" selection-end-column="15" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -83,86 +59,29 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/web/LeaseDriver.py">
+        <entry file="file://$PROJECT_DIR$/web/CoreDriver.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="30" column="22" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="411">
+              <caret line="109" lean-forward="true" selection-start-line="109" selection-end-line="109" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/CoreDriver.py">
+        <entry file="file://$PROJECT_DIR$/web/AddressTableDriver.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="596">
-              <caret line="157" lean-forward="true" selection-start-line="157" selection-end-line="157" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-                <marker date="1543611134477" expanded="true" signature="450:497" ph="..." />
-                <marker date="1543611134477" expanded="true" signature="514:519" ph="..." />
-                <marker date="1543611134477" expanded="true" signature="1006:1044" ph="..." />
-                <marker date="1543611134477" expanded="true" signature="1067:1117" ph="..." />
-                <marker date="1543611134477" expanded="true" signature="1117:1122" ph="..." />
-                <marker date="1543611134477" expanded="true" signature="1285:1458" ph="..." />
-                <marker date="1543611134477" expanded="true" signature="1594:2001" ph="..." />
-                <marker date="1543611134477" expanded="true" signature="1642:2001" ph="..." />
-              </folding>
+            <state relative-caret-position="313">
+              <caret line="32" column="19" selection-start-line="32" selection-start-column="19" selection-end-line="32" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Python Script" />
-      </list>
-    </option>
-  </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>processed_work_sheet</find>
-      <find>send_key</find>
-      <find>switch</find>
-      <find>TODO</find>
-      <find>todo</find>
-      <find>find_element_by_link_text</find>
-      <find>LoginFrame</find>
-      <find>surveysdriver</find>
-      <find>LeaseDriver</find>
-      <find>self.web_driver_handle</find>
-      <find>AddressTableDriver</find>
-      <find>ExportDriver</find>
-      <find>SurveysDriver</find>
-      <find>go_to_surveys_button_command</find>
-      <find>nosu</find>
-      <find>login_button_command</find>
-      <find>start_waiting_for_qr</find>
-      <find>continue_export_button</find>
-      <find>show_continue_export_button</find>
-      <find>current_client_name</find>
-      <find>current_form_name</find>
-      <find>sho</find>
-      <find>Thread</find>
-      <find>wait</find>
-      <find>threading.</find>
-      <find>implic</find>
-      <find>find_element_by_li</find>
-      <find>CLICK</find>
-      <find>pre-proce</find>
-      <find>find_elements_by_ta</find>
+      <find>pagination</find>
     </findStrings>
-    <replaceStrings>
-      <replace>self.driver.web_driver</replace>
-    </replaceStrings>
-    <dirStrings>
-      <dir>C:\Jensen\gui</dir>
-      <dir>C:\Jensen\web</dir>
-    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -170,67 +89,14 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/webdriver/base/JensenWebDriver.py" />
-        <option value="$PROJECT_DIR$/webdriver/LoginDriver.py" />
-        <option value="$PROJECT_DIR$/webdriver/LoginElement.py" />
-        <option value="$PROJECT_DIR$/web/element/LoginElement.py" />
-        <option value="$PROJECT_DIR$/web/element/LoginButtonElement.py" />
-        <option value="$PROJECT_DIR$/web/element/MenuElement.py" />
-        <option value="$PROJECT_DIR$/web/element/MySurveysIFrame.py" />
-        <option value="$PROJECT_DIR$/web/element/ClientEntryElement.py" />
-        <option value="$PROJECT_DIR$/excel/ExcelFormatter.py" />
-        <option value="$PROJECT_DIR$/excel/AddressEntry.py" />
-        <option value="$PROJECT_DIR$/excel/Contact.py" />
-        <option value="$PROJECT_DIR$/gui/LoginPane.py" />
-        <option value="$PROJECT_DIR$/version.py" />
-        <option value="$PROJECT_DIR$/web/element/TheClientListElement.py" />
-        <option value="$PROJECT_DIR$/web/element/SurveysElement.py" />
-        <option value="$PROJECT_DIR$/web/element/LogoutElement.py" />
-        <option value="$PROJECT_DIR$/gui/ProgressBar.py" />
-        <option value="$PROJECT_DIR$/gui/test.py" />
-        <option value="$PROJECT_DIR$/gui/JensenBanner.py" />
-        <option value="$PROJECT_DIR$/gui/ProcessingProgressBar.py" />
-        <option value="$PROJECT_DIR$/web/element/LoginErrorElement.py" />
-        <option value="$PROJECT_DIR$/web/element/UsernameElement.py" />
-        <option value="$PROJECT_DIR$/web/element/PasswordElement.py" />
-        <option value="$PROJECT_DIR$/web/element/ExportElement.py" />
-        <option value="$PROJECT_DIR$/web/ExportDrvier.py" />
-        <option value="$PROJECT_DIR$/web/element/CustomExportLayoutElement.py" />
-        <option value="$PROJECT_DIR$/web/element/ExportFileTypeElement.py" />
-        <option value="$PROJECT_DIR$/web/element/ExportDataElement.py" />
-        <option value="$PROJECT_DIR$/web/element/AddressTableElement.py" />
-        <option value="$PROJECT_DIR$/web/element/LeaseButtonElement.py" />
-        <option value="$PROJECT_DIR$/web/element/clients.py" />
-        <option value="$PROJECT_DIR$/web/element/clients/LeaseListingsElement.py" />
-        <option value="$PROJECT_DIR$/web/element/clients/LeaseButtonElement.py" />
-        <option value="$PROJECT_DIR$/web/element/LeaseDriver.py" />
-        <option value="$PROJECT_DIR$/web/element/clients/TheClientListElement.py" />
-        <option value="$PROJECT_DIR$/web/Driver.py" />
-        <option value="$PROJECT_DIR$/web/element/clients/AddressTableElement.py" />
-        <option value="$PROJECT_DIR$/gui/BrowserSelectionFrame.py" />
-        <option value="$PROJECT_DIR$/gui/BaseFrame.py" />
-        <option value="$PROJECT_DIR$/gui/LoginFrame.py" />
-        <option value="$PROJECT_DIR$/gui/WaitingForQrFrame.py" />
-        <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/web/SurveysDriver.py" />
-        <option value="$PROJECT_DIR$/web/LoginDriver.py" />
-        <option value="$PROJECT_DIR$/excel/ExcelProcessor.py" />
-        <option value="$PROJECT_DIR$/web/ExportDriver.py" />
-        <option value="$PROJECT_DIR$/gui/ProcessingFrame.py" />
-        <option value="$PROJECT_DIR$/gui/SurveyFrame.py" />
-        <option value="$PROJECT_DIR$/web/AddressTableDriver.py" />
-        <option value="$PROJECT_DIR$/web/CoreDriver.py" />
         <option value="$PROJECT_DIR$/web/LeaseDriver.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1762" />
-    <option name="width" value="1646" />
-    <option name="height" value="1407" />
-  </component>
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="1" id="Add" />
+    <option name="x" value="-7" />
+    <option name="width" value="987" />
+    <option name="height" value="1047" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -257,19 +123,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="SearchEverywhereHistoryKey" value="export_driver&#9;null&#9;null&#10;chrome_button_command&#9;ACTION&#9;null" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
-  </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Jensen\web" />
-      <recent name="C:\Jensen\web\element\clients" />
-      <recent name="C:\Jensen\web\element\login" />
-      <recent name="C:\Jensen\web\element\export" />
-      <recent name="C:\Jensen\web\element" />
-    </key>
+    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -283,91 +137,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.main">
-    <configuration name="ExcelProcessor" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Jensen" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/excel" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/excel/ExcelProcessor.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="JensenBanner" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Jensen" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gui" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gui/JensenBanner.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="ProcessingFrame" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Jensen" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gui" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gui/ProcessingFrame.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="SurveyFrame" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="Jensen" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/gui" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gui/SurveyFrame.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Jensen" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -389,20 +159,9 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <list>
-      <item itemvalue="Python.ProcessingFrame" />
-      <item itemvalue="Python.main" />
-      <item itemvalue="Python.SurveyFrame" />
-      <item itemvalue="Python.JensenBanner" />
-      <item itemvalue="Python.ExcelProcessor" />
-    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.ExcelProcessor" />
-        <item itemvalue="Python.SurveyFrame" />
-        <item itemvalue="Python.ProcessingFrame" />
-        <item itemvalue="Python.JensenBanner" />
       </list>
     </recent_temporary>
   </component>
@@ -411,288 +170,71 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="0a604e6f-a359-4e15-beb6-acccb313fb2f" name="Default Changelist" comment="" />
-      <created>1540251883758</created>
+      <changelist id="35c5fbab-409c-4a78-8729-c91f58ac5127" name="Default Changelist" comment="" />
+      <created>1543795766303</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1540251883758</updated>
+      <updated>1543795766303</updated>
     </task>
     <servers />
   </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-  </component>
   <component name="ToolWindowManager">
-    <frame x="2106" y="0" width="1302" height="1407" extended-state="0" />
+    <frame x="-7" y="0" width="987" height="1047" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14240506" />
+      <window_info id="Favorites" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17386723" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Python Console" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49961746" weight="0.28829536" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.22780833" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.32050276" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32968238" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.39978093" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.3299293" />
-      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.2340927" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50038254" side_tool="true" weight="0.28829536" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.18146111" />
-      <window_info anchor="bottom" id="Inspection Results" order="11" weight="0.3299293" />
+      <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.15106007" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/webdriver/base/__init__.py" />
-    <entry file="file://$PROJECT_DIR$/webdriver/base/JensenWebDriver.py" />
-    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/openpyxl/reader/excel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="110" selection-start-line="110" selection-end-line="110" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/geckodriver.log">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://C:/Program Files/Python36/Lib/tkinter/ttk.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="1024" column="8" selection-start-line="1024" selection-start-column="8" selection-end-line="1024" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/selenium/webdriver/remote/webdriver.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="427" selection-start-line="427" selection-end-line="427" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/element/LoginErrorElement.py" />
-    <entry file="file://$PROJECT_DIR$/web/element/clients.py" />
-    <entry file="file://$PROJECT_DIR$/web/element/clients/LeaseListingsElement.py" />
-    <entry file="file://$PROJECT_DIR$/gui/test.py" />
-    <entry file="file://$PROJECT_DIR$/web/element/login/LogoutElement.py" />
-    <entry file="file://$PROJECT_DIR$/web/element/login/UsernameElement.py" />
-    <entry file="file://$PROJECT_DIR$/web/element/login/LoginElement.py" />
-    <entry file="file://$PROJECT_DIR$/web/element/login/PasswordElement.py" />
-    <entry file="file://$PROJECT_DIR$/web/element/login/LoginButtonElement.py" />
-    <entry file="file://$PROJECT_DIR$/web/element/clients/MenuElement.py" />
-    <entry file="file://$PROJECT_DIR$/web/element/clients/SurveysElement.py" />
-    <entry file="file://$PROJECT_DIR$/web/element/clients/LeaseButtonElement.py" />
-    <entry file="file://$PROJECT_DIR$/web/element/clients/AddressTableElement.py" />
-    <entry file="file://$PROJECT_DIR$/web/element/clients/ClientEntryElement.py" />
-    <entry file="file://$PROJECT_DIR$/web/element/clients/MySurveysIFrame.py" />
-    <entry file="file://$PROJECT_DIR$/web/element/clients/TheClientListElement.py" />
-    <entry file="file://$PROJECT_DIR$/excel/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/version.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/element/export/CustomExportLayoutElement.py" />
-    <entry file="file://$PROJECT_DIR$/web/element/export/ExportElement.py" />
-    <entry file="file://$PROJECT_DIR$/web/element/export/ExportFileTypeElement.py" />
-    <entry file="file://$PROJECT_DIR$/web/element/export/ExportDataElement.py" />
-    <entry file="file://$PROJECT_DIR$/excel/Contact.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui/JensenBanner.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui/BaseFrame.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="19" column="21" lean-forward="true" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui/WaitingForQrFrame.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="33" column="27" selection-start-line="33" selection-start-column="27" selection-end-line="33" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui/BrowserSelectionFrame.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="597">
-          <caret line="47" column="24" selection-start-line="47" selection-start-column="24" selection-end-line="47" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui/LoginFrame.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="31" column="31" lean-forward="true" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="1663" selection-start-line="1663" selection-end-line="1663" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Program Files/Python36/Lib/tkinter/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="1279" selection-start-line="1279" selection-end-line="1279" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2018.2/system/python_stubs/-1937233007/nt.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="378" column="4" lean-forward="true" selection-start-line="378" selection-start-column="4" selection-end-line="378" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/excel/AddressEntry.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/LoginDriver.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="27" lean-forward="true" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/excel/ExcelProcessor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="40" column="8" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="35" column="33" lean-forward="true" selection-start-line="35" selection-start-column="33" selection-end-line="35" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui/ProcessingProgressBar.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui/ProcessingFrame.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="943">
-          <caret line="152" column="72" selection-start-line="152" selection-start-column="72" selection-end-line="152" selection-end-column="72" />
+        <state>
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <marker date="1543602098828" expanded="true" signature="245:250" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/Program Files/Python36/Lib/threading.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="863" selection-start-line="863" selection-end-line="863" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/ExportDriver.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/SurveysDriver.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="568">
-          <caret line="121" column="8" selection-start-line="121" selection-start-column="8" selection-end-line="121" selection-end-column="8" />
-          <folding>
-            <marker date="1543364386654" expanded="true" signature="1308:1546" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gui/SurveyFrame.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
-          <caret line="66" column="66" lean-forward="true" selection-start-line="66" selection-start-column="66" selection-end-line="66" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/CoreDriver.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="596">
-          <caret line="157" lean-forward="true" selection-start-line="157" selection-end-line="157" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <marker date="1543611134477" expanded="true" signature="450:497" ph="..." />
-            <marker date="1543611134477" expanded="true" signature="514:519" ph="..." />
-            <marker date="1543611134477" expanded="true" signature="1006:1044" ph="..." />
-            <marker date="1543611134477" expanded="true" signature="1067:1117" ph="..." />
-            <marker date="1543611134477" expanded="true" signature="1117:1122" ph="..." />
-            <marker date="1543611134477" expanded="true" signature="1285:1458" ph="..." />
-            <marker date="1543611134477" expanded="true" signature="1594:2001" ph="..." />
-            <marker date="1543611134477" expanded="true" signature="1642:2001" ph="..." />
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/AddressTableDriver.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="36" column="73" selection-start-line="36" selection-start-column="73" selection-end-line="36" selection-end-column="73" />
+        <state relative-caret-position="313">
+          <caret line="32" column="19" selection-start-line="32" selection-start-column="19" selection-end-line="32" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/LeaseDriver.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="143">
+          <caret line="13" column="15" lean-forward="true" selection-start-line="13" selection-start-column="15" selection-end-line="13" selection-end-column="15" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/LeaseDriver.py">
+    <entry file="file://$PROJECT_DIR$/web/CoreDriver.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="30" column="22" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="411">
+          <caret line="109" lean-forward="true" selection-start-line="109" selection-end-line="109" />
         </state>
       </provider>
     </entry>

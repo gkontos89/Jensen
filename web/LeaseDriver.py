@@ -20,12 +20,13 @@ class LeaseDriver:
         # grab number of listings in the window to keep index track
         availability_grid_section = self.web_driver_handle.find_element_by_id('contenttableavailabilityGrid')
         available_spaces = availability_grid_section.find_elements_by_xpath("//div[@class='']")
-        for i in range(0, len(available_spaces)):
-            temp_availability_grid_section = self.web_driver_handle.find_element_by_id('contenttableavailabilityGrid')
-            temp_available_spaces = temp_availability_grid_section.find_elements_by_xpath("//div[@class='']")
-            available_space = temp_available_spaces[i]
-            available_space.click()
+        available_space = available_spaces[0]
+        available_space.click()
 
+        # grab handles for navigation
+        next_lease_button = self.web_driver_handle.find_element_by_class_name('right')
+        num_clicks = len(available_spaces) - 1  # take one out because the first one already appears
+        for i in range(0, num_clicks):
             lease_element = self.web_driver_handle.find_element_by_id('LeaseType')
             lease_text = lease_element.find_element_by_xpath("//span[@data-bind='textWithTitle: LeaseType']")
             if lease_text.text == 'Relet':
@@ -61,24 +62,7 @@ class LeaseDriver:
                     address_entry.add_contact(name=name, email=email, phone=phone)
 
             time.sleep(1)  # I hate doing this, but for some reason the lease page isn't appearing fast enough
+            next_lease_button.click()
 
-            go_back_button = self.web_driver_handle.find_element_by_class_name('go-back')
-            '''
-            Attempt 1
-            go_back_button.click()  # cannot be scrolled into view
-            
-            Attempt 2
-            action = ActionChains(self.web_driver_handle)
-            action.move_to_element(go_back_button).perform()  # rect is undefined
-            action.click()
-            
-            Attempt 3
-            action = ActionChains(self.web_driver_handle)
-            action.move_to_element(go_back_button)
-            action.click()
-            action.perform()
-            '''
-            action = ActionChains(self.web_driver_handle)
-            action.move_to_element(go_back_button)
-            action.click()
-            action.perform()
+        close_button = self.web_driver_handle.find_element_by_class_name('close close-icon')
+        close_button.click()
