@@ -46,7 +46,6 @@ class LeaseDriver:
         back_button = self.web_driver_handle.find_element_by_class_name('go-back')
         num_clicks = len(available_spaces) - 1  # take one out because the first one already appears
         for i in range(0, num_clicks):
-
             # lease_element = self.web_driver_handle.find_element_by_id('LeaseType')
             lease_element = self.get_web_driver_wait_handle(element_string='LeaseType')
             lease_text = lease_element.find_element_by_xpath("//span[@data-bind='textWithTitle: LeaseType']")
