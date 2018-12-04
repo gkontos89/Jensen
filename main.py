@@ -46,6 +46,7 @@ class Jensen(Tk):
 
 
 if __name__ == '__main__':
+    #https: // stackoverflow.com / questions / 8050775 / using - pythons - logging - module - to - log - all - exceptions - and -errors
     root = Jensen()
     root.geometry('500x500')
     root.mainloop()
