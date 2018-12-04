@@ -98,7 +98,8 @@ class CoreDriver:
 
             # Navigate to lease page and process listings
             lease_driver = LeaseDriver(self.web_driver)
-            lease_driver.go_to_lease_info()
+            # try:
+            #     lease_driver.go_to_lease_info()
             lease_driver.process_lease_listings(address_entry)
 
             controller.report_square_footage_retrieved()

@@ -34,17 +34,31 @@ class LeaseDriver:
         :return:
         """
         # grab number of listings in the window to keep index track
-        availability_grid_section = self.web_driver_handle.find_element_by_id('contenttableavailabilityGrid')
+        # Sometimes leases don't load...
+        retries = 0
+        availability_grid_section = None
+        while retries < 3:
+            try:
+                availability_grid_section = self.web_driver_handle.find_element_by_id('contenttableavailabilityGrid')
+                break
+            except NoSuchElementException:
+                self.web_driver_handle.refresh()
+                retries += 1
+                pass
+
         available_spaces = availability_grid_section.find_elements_by_xpath("//div[@class='']")
         available_space = available_spaces[0]
         available_space.click()
 
         # grab handles for navigation
-        # next_lease_button = self.web_driver_handle.find_element_by_class_name('right')
-        next_lease_button = self.get_web_driver_wait_handle(element_type=By.CLASS_NAME, element_string='right')
-        # close_button = self.web_driver_handle.find_element_by_class_name('close close-icon')
+        next_lease_button = None
+        if len(available_spaces) > 1:
+            # next_lease_button = self.web_driver_handle.find_element_by_class_name('right')
+            next_lease_button = self.get_web_driver_wait_handle(element_type=By.CLASS_NAME, element_string='right')
+            # close_button = self.web_driver_handle.find_element_by_class_name('close close-icon')
+
         back_button = self.web_driver_handle.find_element_by_class_name('go-back')
-        num_clicks = len(available_spaces) - 1  # take one out because the first one already appears
+        num_clicks = len(available_spaces) - 1 if len(available_spaces) > 1 else 1  # take one out because the first one already appears
         for i in range(0, num_clicks):
             # lease_element = self.web_driver_handle.find_element_by_id('LeaseType')
             lease_element = self.get_web_driver_wait_handle(element_string='LeaseType')
@@ -86,7 +100,9 @@ class LeaseDriver:
                     email = contact_box.find_element_by_tag_name('a').text
                     address_entry.add_contact(name=name, email=email, phone=phone)
 
-            next_lease_button.click()
+            if next_lease_button:
+                next_lease_button.click()
+
             time.sleep(1)  # I hate doing this, but for some reason the lease page isn't appearing fast enough
             # Getting killed by stale elements:
             # https://stackoverflow.com/questions/27003423/python-selenium-stale-element-fix
