@@ -97,10 +97,17 @@ class CoreDriver:
             address_table_driver.go_to_address_page(address)
 
             # Navigate to lease page and process listings
+            # TODO properly handle residential units
             lease_driver = LeaseDriver(self.web_driver)
-            # try:
-            #     lease_driver.go_to_lease_info()
-            lease_driver.process_lease_listings(address_entry)
+            leases_found = True
+            try:
+                lease_driver.go_to_lease_info()
+            except NoSuchElementException:
+                leases_found = False
+                pass
+
+            if leases_found:
+                lease_driver.process_lease_listings(address_entry)
 
             controller.report_square_footage_retrieved()
             controller.report_rent_range_retrieved()
