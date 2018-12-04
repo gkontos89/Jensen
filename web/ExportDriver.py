@@ -45,7 +45,7 @@ class ExportDriver:
     def export_data(self):
         # exported date files come out as "ExportMMDDYY.xls" with YY being the last two digits...what a pain
         now = datetime.datetime.now()
-        date = str(now.month) + str(now.day) + str(now.year)[2:]
+        date = "{:%m}".format(now) + "{:%d}".format(now) + "{:%y}".format(now)
 
         # Find out the file location based on OS
         if platform.system() == 'Windows':

@@ -59,7 +59,6 @@ class ProcessingFrame(BaseFrame):
         self.cancel_button.pack()
         self.view_processed_file_button.pack()
         self.finished_button.pack()
-        # TODO cancel button
 
     def prepare_for_processing(self, client_name, form):
         self.reset_processing_screen()
