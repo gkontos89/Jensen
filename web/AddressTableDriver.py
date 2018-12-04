@@ -21,7 +21,7 @@ class AddressTableDriver:
         self.address_entries = {}
         for address_row in address_rows:
             address_link = address_row.find_element_by_tag_name('span')
-            self.address_entries[address_link.text] = address_link
+            self.address_entries[address_link.text.lower()] = address_link
 
     def go_to_address_page(self, address):
         """
@@ -30,6 +30,7 @@ class AddressTableDriver:
         :param address: address page to go to
         :return:
         """
+        address = address.lower()
         # Grab the pagination window if exists
         pagination_items = None
         try:

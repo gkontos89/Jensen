@@ -124,6 +124,7 @@ class CoreDriver:
         controller.report_processed_file_complete()
 
         self.open_menu()
+        # TODO there's a bug here where it doesn't go back to surveys
         self.go_to_surveys()
 
     def get_processed_file_name(self):
