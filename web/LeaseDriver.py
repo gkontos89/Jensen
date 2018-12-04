@@ -68,7 +68,7 @@ class LeaseDriver:
                 # rent = self.web_driver_handle.find_element_by_id('Rent_Display')
                 rent = self.get_web_driver_wait_handle(element_string='Rent_Display')
                 rent_text = rent.find_element_by_xpath("//span[@data-bind='textWithTitle: Rent.Display']")
-                address_entry.set_actual_rent(rent_text)  # TODO find out if you need multiple rents
+                address_entry.set_actual_rent(rent_text.text)  # TODO find out if you need multiple rents
 
                 # grab square
                 square_footage = self.get_web_driver_wait_handle(element_string='AvailableArea')
