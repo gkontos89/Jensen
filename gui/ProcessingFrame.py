@@ -6,6 +6,7 @@ from tkinter import Button, Label, Tk, LabelFrame
 
 from gui.BaseFrame import BaseFrame
 from gui.ProcessingProgressBar import ProcessingProgressBar
+from utilities.JensenLogger import JensenLogger
 
 
 class ProcessingFrame(BaseFrame):
@@ -157,6 +158,7 @@ class ProcessingFrame(BaseFrame):
     def cancel_button_command(self):
         self.reset_processing_screen()
         self.controller.show_frame('SurveyFrame')
+        JensenLogger.get_instance().log_info("Cancelling processing...")
         pass
 
     def view_processed_file_button_command(self):
