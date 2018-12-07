@@ -3,6 +3,7 @@ import getpass
 import os
 import platform
 import sys
+import time
 from enum import Enum
 
 from selenium import webdriver
@@ -121,15 +122,19 @@ class CoreDriver:
                 # Navigate back to address listings
                 back_link = self.web_driver.find_element_by_class_name('masthead-back-link')
                 back_link.click()
+        except:
+            JensenLogger.get_instance().log_exception("Failed processing client!")
 
+        try:
             self.excel_processor.generate_post_processed_file()
             controller.report_processed_file_complete()
-
-            self.open_menu()
-            # TODO there's a bug here where it doesn't go back to surveys
-            self.go_to_surveys()
         except:
-            JensenLogger.get_instance().log_exception("Failed processing client")
+            JensenLogger.get_instance().log_exception("Failed generating post processed excel file!")
+
+        time.sleep(2)
+        self.open_menu()
+        # TODO there's a bug here where it doesn't go back to surveys
+        self.go_to_surveys()
 
     def get_processed_file_name(self):
         return self.excel_processor.processed_file_name
