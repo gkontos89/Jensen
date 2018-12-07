@@ -23,11 +23,14 @@ class Jensen(Tk):
         self.frames = {}
         self.driver = CoreDriver()
 
-        # Add web driver executable to path
+        # Add web driver executables to path
         driver_path = os.path.join(os.getcwd(), 'tools', 'win' if platform.system() == 'Windows' else 'mac')
-        current_path = os.environ['Path']
+        key = 'Path' if 'Path' in os.environ else 'PATH'
+        current_path = os.environ[key]
         if driver_path not in current_path:
-            os.environ['Path'] += os.pathsep + driver_path
+            os.environ[key] += os.pathsep + driver_path
+
+        # Update permissions, at least on Mac
 
         for frame in (BrowserSelectionFrame, LoginFrame, ProcessingFrame, WaitingForQrFrame, SurveyFrame):
             frame_name = frame.__name__
