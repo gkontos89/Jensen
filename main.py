@@ -20,8 +20,6 @@ class Jensen(Tk):
         super().__init__()
         self.main_container = Frame(self)
         self.main_container.pack(side='top', fill='both', expand=True)
-        # self.health_text.pack()
-        # self.health_container.grid(row=0, column=0, sticky='nsew')
         self.frames = {}
         self.driver = CoreDriver()
 
