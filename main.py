@@ -31,8 +31,10 @@ class Jensen(Tk):
             os.environ[key] += os.pathsep + driver_path
 
         # Update permissions on the drivers
-        os.chmod(os.path.join(driver_path, 'chromedriver'), 0o777)
-        os.chmod(os.path.join(driver_path, 'geckodriver'), 0o777)
+        os.chmod(os.path.join(driver_path, 'chromedriver' if platform.system() is not 'Windows' else 'chromedriver.exe')
+                 , 0o777)
+        os.chmod(os.path.join(driver_path, 'geckodriver' if platform.system() is not 'Windows' else 'geckodriver.exe')
+                 , 0o777)
 
         for frame in (BrowserSelectionFrame, LoginFrame, ProcessingFrame, WaitingForQrFrame, SurveyFrame):
             frame_name = frame.__name__
