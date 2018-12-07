@@ -31,20 +31,17 @@ class JensenLogger:
 
     def configure(self, controller):
         self.__controller = controller
-        log_directory = os.path.join('C:\\Users', getpass.getuser(), 'Documents', 'JensenLogs') \
-            if platform.system() == 'Windows' else 'FAIL'  # TODO figure out mac
-
+        root = 'C:\\Users' if platform.system() == 'Windows' else '/users/'
+        user_name = getpass.getuser()
+        log_directory = os.path.join(root, user_name, 'Documents', 'JensenLogs')
         if not os.path.isdir(log_directory):
             os.mkdir(log_directory)
-        else:
-            # TODO remove latest from log
-            pass
 
         now = datetime.datetime.now()
         log_file_name = "JensenLog__" + "{:%m}".format(now) + "_" + "{:%d}".format(now) + "_" + "{:%y}".format(now) \
                         + "__" + "{:%H}".format(now) + "_" + "{:%M}".format(now) + "_" + "{:%S}".format(now) + '.log'
         self.__file_handler = logging.FileHandler(os.path.join(log_directory, log_file_name))
-        self.__file_handler.setFormatter(logging.Formatter('%(levelname)s --- %(message)s'))
+        self.__file_handler.setFormatter(logging.Formatter('%(levelname)s --- %(message)s\n'))
         self.__logger = logging.getLogger("Jensen")
         self.__logger.setLevel(logging.INFO)
         self.__logger.addHandler(self.__file_handler)

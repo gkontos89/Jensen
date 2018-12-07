@@ -30,7 +30,9 @@ class Jensen(Tk):
         if driver_path not in current_path:
             os.environ[key] += os.pathsep + driver_path
 
-        # Update permissions, at least on Mac
+        # Update permissions on the drivers
+        os.chmod(os.path.join(driver_path, 'chromedriver'), 0o777)
+        os.chmod(os.path.join(driver_path, 'geckodriver'), 0o777)
 
         for frame in (BrowserSelectionFrame, LoginFrame, ProcessingFrame, WaitingForQrFrame, SurveyFrame):
             frame_name = frame.__name__

@@ -28,11 +28,13 @@ class CoreDriver:
         self.export_driver = None
         self.excel_processor = None
 
-    def configure_web_driver(self, web_browser):
+    def configure_web_driver(self, web_browser, executable_path=None):
         if web_browser == WebBrowser.CHROME:
-            self.web_driver = webdriver.Chrome()
+            self.web_driver = webdriver.Chrome() if executable_path is None else\
+                webdriver.Chrome(executable_path=executable_path)
         elif web_browser == WebBrowser.FIREFOX:
-            self.web_driver = webdriver.Firefox()
+            self.web_driver = webdriver.Firefox() if executable_path is None else\
+                webdriver.Firefox(executable_path=executable_path)
         elif web_browser == WebBrowser.EDGE:
             self.web_driver = webdriver.Edge()
 

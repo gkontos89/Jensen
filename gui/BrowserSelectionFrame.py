@@ -1,7 +1,9 @@
 import os
+import platform
 from tkinter import Button, Tk, PhotoImage, Label, LEFT
 
 from gui.BaseFrame import BaseFrame
+from utilities.JensenLogger import JensenLogger
 from web.CoreDriver import WebBrowser
 
 
@@ -38,14 +40,21 @@ class BrowserSelectionFrame(BaseFrame):
         self.edge_button.pack(side=LEFT)
 
     def firefox_button_command(self):
-        self.driver.configure_web_driver(WebBrowser.FIREFOX)
-        self.driver.go_to_costar()
-        self.controller.show_frame('LoginFrame')
+        try:
+            self.driver.configure_web_driver(WebBrowser.FIREFOX)
+            self.driver.go_to_costar()
+            self.controller.show_frame('LoginFrame')
+        except:
+            JensenLogger.get_instance().log_exception('Error trying to launch Firefox browser')
+            JensenLogger.get_instance().log_warning('Ensure Firefox Version 63.0.0+ is installed')
 
     def chrome_button_command(self):
-        self.driver.configure_web_driver(WebBrowser.CHROME)
-        self.driver.go_to_costar()
-        self.controller.show_frame('LoginFrame')
+        try:
+            self.driver.configure_web_driver(WebBrowser.CHROME)
+            self.driver.go_to_costar()
+            self.controller.show_frame('LoginFrame')
+        except:
+            JensenLogger.get_instance().log_exception('Error trying to launch Chrome browser')
 
     def edge_button_command(self):
         pass
