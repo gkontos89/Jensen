@@ -3,12 +3,14 @@ import getpass
 import os
 import platform
 import sys
+import time
 from enum import Enum
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 
 from excel.ExcelProcessor import ExcelProcessor
+from utilities.JensenLogger import JensenLogger
 from web.AddressTableDriver import AddressTableDriver
 from web.ExportDriver import ExportDriver, ExportFileType
 from web.LeaseDriver import LeaseDriver
@@ -72,59 +74,65 @@ class CoreDriver:
         :param controller: handle to frame that contains elements for updating a GUI for progress
         :return: N/A
         """
-        self.export_driver.close_export_window()
+        try:
+            self.export_driver.close_export_window()
 
-        # Process exported file
-        self.excel_processor = ExcelProcessor()
-        self.excel_processor.pre_process_file(self.export_driver.export_file_name)
-        controller.report_pre_processed_data_complete()
+            # Process exported file
+            self.excel_processor = ExcelProcessor()
+            self.excel_processor.pre_process_file(self.export_driver.export_file_name)
+            controller.report_pre_processed_data_complete()
 
-        '''
-        +1 for generating post processed excel sheet
-        '''
-        number_of_steps = len(self.excel_processor.address_entries) + 1
-        controller.set_number_of_processing_steps(number_of_steps)
-        address_processed_count = 0
-        total_addresses = len(self.excel_processor.address_entries)
-        controller.report_number_of_listings_found(total_addresses)
-        for address, address_entry in self.excel_processor.address_entries.items():
-            controller.update_name_of_processing_address(address)
+            '''
+            +1 for generating post processed excel sheet
+            '''
+            number_of_steps = len(self.excel_processor.address_entries) + 1
+            controller.set_number_of_processing_steps(number_of_steps)
+            address_processed_count = 0
+            total_addresses = len(self.excel_processor.address_entries)
+            controller.report_number_of_listings_found(total_addresses)
+            for address, address_entry in self.excel_processor.address_entries.items():
+                controller.update_name_of_processing_address(address)
 
-            # Grab the table and find the correct address link
-            # Go to address page
-            address_table_driver = AddressTableDriver(self.web_driver)
-            address_table_driver.select_list_view()
-            address_table_driver.go_to_address_page(address)
+                # Grab the table and find the correct address link
+                # Go to address page
+                address_table_driver = AddressTableDriver(self.web_driver)
+                address_table_driver.select_list_view()
+                address_table_driver.go_to_address_page(address)
 
-            # Navigate to lease page and process listings
-            # TODO properly handle residential units
-            lease_driver = LeaseDriver(self.web_driver)
-            leases_found = True
-            try:
-                lease_driver.go_to_lease_info()
-            except NoSuchElementException:
-                leases_found = False
-                pass
+                # Navigate to lease page and process listings
+                # TODO properly handle residential units
+                lease_driver = LeaseDriver(self.web_driver)
+                leases_found = True
+                try:
+                    lease_driver.go_to_lease_info()
+                except NoSuchElementException:
+                    leases_found = False
+                    pass
 
-            if leases_found:
-                lease_driver.process_lease_listings(address_entry)
+                if leases_found:
+                    lease_driver.process_lease_listings(address_entry)
 
-            controller.report_square_footage_retrieved()
-            controller.report_rent_range_retrieved()
-            controller.report_contact_information_retrieved()
-            controller.report_address_processed()
-            address_processed_count += 1
-            controller.update_listings_processed(address_processed_count)
+                controller.report_square_footage_retrieved()
+                controller.report_rent_range_retrieved()
+                controller.report_contact_information_retrieved()
+                controller.report_address_processed()
+                address_processed_count += 1
+                controller.update_listings_processed(address_processed_count)
 
-            # Navigate back to address listings
-            back_link = self.web_driver.find_element_by_class_name('masthead-back-link')
-            back_link.click()
+                # Navigate back to address listings
+                back_link = self.web_driver.find_element_by_class_name('masthead-back-link')
+                back_link.click()
+        except:
+            JensenLogger.get_instance().log_exception("Failed processing client!")
 
-        self.excel_processor.generate_post_processed_file()
-        controller.report_processed_file_complete()
+        try:
+            self.excel_processor.generate_post_processed_file()
+            controller.report_processed_file_complete()
+        except:
+            JensenLogger.get_instance().log_exception("Failed generating post processed excel file!")
 
+        time.sleep(2)
         self.open_menu()
-        # TODO there's a bug here where it doesn't go back to surveys
         self.go_to_surveys()
 
     def get_processed_file_name(self):

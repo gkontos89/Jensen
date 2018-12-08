@@ -6,6 +6,8 @@ from enum import Enum
 
 from selenium.webdriver.support.select import Select
 
+from utilities.JensenLogger import JensenLogger
+
 
 class ExportFileType(Enum):
     COMMA_SEPARATE_VALUES = 1
@@ -20,11 +22,14 @@ class ExportDriver:
 
     def go_to_export_screen(self):
         # Expose the menu "More" menu options to get to export
-        search_bar_more_menu_popup_button = self.web_driver_handle.find_element_by_id('search-bar-more-menu-button')
-        search_bar_more_menu_popup_button.click()
-        more_menu_popup = self.web_driver_handle.find_element_by_id('more-menu-popup')
-        export_button = more_menu_popup.find_element_by_xpath("//div[@data-action='export']")
-        export_button.click()
+        try:
+            search_bar_more_menu_popup_button = self.web_driver_handle.find_element_by_id('more-button')
+            search_bar_more_menu_popup_button.click()
+            more_menu_popup = self.web_driver_handle.find_element_by_id('more-menu-popup')
+            export_button = more_menu_popup.find_element_by_xpath("//div[@data-action='export']")
+            export_button.click()
+        except:
+            JensenLogger.get_instance().log_exception('Error trying to go to Export Screen!')
 
     def select_custom_export_filter(self, layout_text):
         export_frame = self.web_driver_handle.find_element_by_name('export_frame')

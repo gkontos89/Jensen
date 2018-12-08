@@ -2,6 +2,8 @@ import time
 
 from selenium.common.exceptions import NoSuchElementException
 
+from utilities.JensenLogger import JensenLogger
+
 
 class AddressTableDriver:
     def __init__(self, web_driver_handle):
@@ -10,7 +12,7 @@ class AddressTableDriver:
         self.address_entries = None
 
     def select_list_view(self):
-        select_list_view_element = self.web_driver_handle.find_element_by_xpath("//i[@data-action='select-list-view']")
+        select_list_view_element = self.web_driver_handle.find_element_by_id('search-bar-list-view-button')
         select_list_view_element.click()
 
     def attach_to_address_table(self):
@@ -34,22 +36,26 @@ class AddressTableDriver:
         # Grab the pagination window if exists
         pagination_items = None
         try:
+            self.web_driver_handle.implicitly_wait(4)
             pagination_panel = self.web_driver_handle.find_element_by_id('pagination')
             pagination_items = pagination_panel.find_elements_by_tag_name('div')
         except NoSuchElementException:
             pass
 
+        self.web_driver_handle.implicitly_wait(20)
         search_complete = False
         while not search_complete:
             self.attach_to_address_table()
             if address not in self.address_entries:
                 if not pagination_items or len(pagination_items) < 1:
-                    raise Exception("Address:  " + address + " not found!!!")
+                    JensenLogger.get_instance().log_error("Address:  " + address + " not found!!!")
+                    search_complete = True
                 else:
                     next_pagination_button = pagination_items[-1]
                     if 'disabled' in next_pagination_button.get_attribute('class'):
-                        # TODO report to controller somehow
-                        raise Exception("Address:  " + address + " not found, after searching all pages!!!")
+                        JensenLogger.get_instance().log_error("Address:  " + address +
+                                                              " not found, after searching all pages!!!")
+                        search_complete = True
                     else:
                         next_pagination_button.click()
                         time.sleep(1)
