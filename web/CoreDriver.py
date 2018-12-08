@@ -21,6 +21,7 @@ class WebBrowser(Enum):
     CHROME = 1
     FIREFOX = 2
     EDGE = 3
+    SAFARI = 4
 
 
 class CoreDriver:
@@ -36,6 +37,8 @@ class CoreDriver:
             self.web_driver = webdriver.Firefox()
         elif web_browser == WebBrowser.EDGE:
             self.web_driver = webdriver.Edge()
+        elif web_browser == WebBrowser.SAFARI:
+            self.web_driver = webdriver.Safari()
 
     def close_web_driver(self):
         self.web_driver.close()
