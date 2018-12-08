@@ -102,4 +102,5 @@ venv.bak/
 # Pycharm
 .idea/workspace.xml
 .idea/Jensen.iml
-.ideal/misc.xml
+.idea/misc.xml
+.idea/modules.xml

@@ -170,6 +170,7 @@ class ProcessingFrame(BaseFrame):
     def finished_button_command(self):
         self.reset_processing_screen()
         self.controller.show_frame('SurveyFrame')
+        JensenLogger.get_instance().log_info("Finished button pressed")
 
 
 if __name__ == '__main__':
