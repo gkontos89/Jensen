@@ -37,17 +37,17 @@ class BrowserSelectionFrame(BaseFrame):
                                   command=self.edge_button_command,
                                   width=WEB_BUTTON_WIDTH,
                                   height=WEB_BUTTON_HEIGHT)
-        safari_logo_path = os.path.join(this_directory, '../img/safari.png')
-        self.safari_logo = PhotoImage(file=safari_logo_path)
-        self.safari_button = Button(self, image=self.safari_logo,
-                                    command=self.safari_button_command,
-                                    width=WEB_BUTTON_WIDTH,
-                                    height=WEB_BUTTON_HEIGHT)
+        # safari_logo_path = os.path.join(this_directory, '../img/safari.png')
+        # self.safari_logo = PhotoImage(file=safari_logo_path)
+        # self.safari_button = Button(self, image=self.safari_logo,
+        #                             command=self.safari_button_command,
+        #                             width=WEB_BUTTON_WIDTH,
+        #                             height=WEB_BUTTON_HEIGHT)
         self.instructions.pack()
         self.firefox_button.pack(side=LEFT)
         self.chrome_button.pack(side=LEFT)
         self.edge_button.pack(side=LEFT)
-        self.safari_button.pack(side=LEFT)
+        #self.safari_button.pack(side=LEFT)
 
     def firefox_button_command(self):
         try:
