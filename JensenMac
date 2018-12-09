@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+source /users/samueljensen/Documents/Jensen/macVenv/bin/activate
+python /users/samueljensen/Documents/Jensen/main.py
