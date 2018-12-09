@@ -35,6 +35,7 @@ class LeaseDriver:
         """
         # grab number of listings in the window to keep index track
         # Sometimes leases don't load...
+        # TODO handle "<div class="availability-spaces-not-available">No Spaces Available.</div>
         retries = 0
         availability_grid_section = None
         while retries < 3:
@@ -104,7 +105,8 @@ class LeaseDriver:
                     #         phone = phone_number_element.\
                     #             find_element_by_xpath("//span[@data-bind='textWithTitle: Number']").text
 
-                    email = contact_box.find_element_by_tag_name('a').text
+                    email_element = self.get_web_driver_wait_handle(driver=contact_box, element_type=By.TAG_NAME, element_string='a')
+                    email = email_element.text
                     address_entry.add_contact(name=name, email=email, phone=phone)
 
             if next_lease_button:
