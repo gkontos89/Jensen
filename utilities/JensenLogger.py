@@ -63,3 +63,8 @@ class JensenLogger:
 
     def shutdown_logger(self):
         pass
+
+    def open_current_log_file(self):
+        # TODO MAC
+        os.startfile(self.__file_handler.baseFilename)
+
