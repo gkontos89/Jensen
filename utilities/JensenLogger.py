@@ -65,6 +65,8 @@ class JensenLogger:
         pass
 
     def open_current_log_file(self):
-        # TODO MAC
-        os.startfile(self.__file_handler.baseFilename)
+        if platform.system() != 'Windows':
+            os.system("open " + self.__file_handler.baseFilename)
+        else:
+            os.startfile(self.__file_handler.baseFilename)
 
