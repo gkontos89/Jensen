@@ -6,25 +6,28 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
+from utilities.JensenLogger import JensenLogger
+
 
 class LeaseDriver:
     def __init__(self, web_driver_handle):
         self.web_driver_handle = web_driver_handle
 
-    def get_web_driver_wait_handle(self, driver=None, element_type=By.ID, element_string=None, multiple=False):
+    def get_web_driver_wait_handle(self, driver=None, element_type=By.ID, element_string=None, multiple=False, timeout=15):
         ignored_exceptions = (NoSuchElementException, StaleElementReferenceException,)
         if not driver:
             driver = self.web_driver_handle
 
         if multiple:
-            return WebDriverWait(driver=driver, timeout=15, ignored_exceptions=ignored_exceptions) \
+            return WebDriverWait(driver=driver, timeout=timeout, ignored_exceptions=ignored_exceptions) \
                 .until(expected_conditions.presence_of_all_elements_located((element_type, element_string)))
         else:
-            return WebDriverWait(driver=driver, timeout=15, ignored_exceptions=ignored_exceptions)\
+            return WebDriverWait(driver=driver, timeout=timeout, ignored_exceptions=ignored_exceptions)\
                 .until(expected_conditions.presence_of_element_located((element_type, element_string)))
 
     def go_to_lease_info(self):
-        lease_tab_element = self.web_driver_handle.find_element_by_link_text('Lease')
+        # lease_tab_element = self.web_driver_handle.find_element_by_link_text('Lease')
+        lease_tab_element = self.get_web_driver_wait_handle(element_type=By.LINK_TEXT, element_string='Lease')
         lease_tab_element.click()
 
     def process_lease_listings(self, address_entry):
@@ -38,10 +41,36 @@ class LeaseDriver:
         # TODO handle "<div class="availability-spaces-not-available">No Spaces Available.</div>
         retries = 0
         availability_grid_section = None
-        while retries < 3:
+        no_spaces_available = None
+        while retries < 2:
             try:
                 availability_grid_section = self.web_driver_handle.find_element_by_id('contenttableavailabilityGrid')
-                break
+            except NoSuchElementException:
+                try:
+                    no_spaces_available = self.web_driver_handle.find_element_by_class_name('availability-spaces-not-available')
+                except NoSuchElementException:
+
+
+
+
+
+
+        retries = 0
+        availability_grid_section = None
+        while retries < 3:
+            try:
+                # Check to see if there are any leases even available
+                try:
+                    no_spaces_available = self.get_web_driver_wait_handle(element_type=By.CLASS_NAME,
+                                                                          element_string='availability-spaces-not-available',
+                                                                          timeout=2)
+                    if no_spaces_available is not None:
+                        JensenLogger.get_instance().log_info('No leases available for ' + address_entry.address)
+                        address_entry.set_leasing_company_name('None')
+                        return
+                finally:
+                    availability_grid_section = self.web_driver_handle.find_element_by_id('contenttableavailabilityGrid')
+                    break
             except NoSuchElementException:
                 self.web_driver_handle.refresh()
                 retries += 1
