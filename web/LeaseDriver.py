@@ -38,43 +38,58 @@ class LeaseDriver:
         """
         # grab number of listings in the window to keep index track
         # Sometimes leases don't load...
-        # TODO handle "<div class="availability-spaces-not-available">No Spaces Available.</div>
         retries = 0
         availability_grid_section = None
         no_spaces_available = None
         while retries < 2:
             try:
                 availability_grid_section = self.web_driver_handle.find_element_by_id('contenttableavailabilityGrid')
+                break
             except NoSuchElementException:
                 try:
                     no_spaces_available = self.web_driver_handle.find_element_by_class_name('availability-spaces-not-available')
+                    break
                 except NoSuchElementException:
-
-
-
-
-
-
-        retries = 0
-        availability_grid_section = None
-        while retries < 3:
-            try:
-                # Check to see if there are any leases even available
-                try:
-                    no_spaces_available = self.get_web_driver_wait_handle(element_type=By.CLASS_NAME,
-                                                                          element_string='availability-spaces-not-available',
-                                                                          timeout=2)
-                    if no_spaces_available is not None:
-                        JensenLogger.get_instance().log_info('No leases available for ' + address_entry.address)
+                    if retries > 0:
+                        JensenLogger.get_instance().log_warning("It appears the lease page didn't properly load for " +
+                                                                address_entry.address)
                         address_entry.set_leasing_company_name('None')
                         return
-                finally:
-                    availability_grid_section = self.web_driver_handle.find_element_by_id('contenttableavailabilityGrid')
-                    break
-            except NoSuchElementException:
-                self.web_driver_handle.refresh()
-                retries += 1
-                pass
+                    else:
+                        retries += 1
+                        self.web_driver_handle.refresh()
+
+        if no_spaces_available is not None:
+            JensenLogger.get_instance().log_info("No spaces are available for " + address_entry.address)
+            address_entry.set_leasing_company_name('NO LEASES AVAILABLE')
+            return
+
+        if availability_grid_section is None:
+            JensenLogger.get_instance().log_warning("Lease page had trouble loading for " + address_entry.address +
+                                                    " after two attempts")
+            return
+
+
+        # retries = 0
+        # availability_grid_section = None
+        # while retries < 3:
+        #     try:
+        #         # Check to see if there are any leases even available
+        #         try:
+        #             no_spaces_available = self.get_web_driver_wait_handle(element_type=By.CLASS_NAME,
+        #                                                                   element_string='availability-spaces-not-available',
+        #                                                                   timeout=2)
+        #             if no_spaces_available is not None:
+        #                 JensenLogger.get_instance().log_info('No leases available for ' + address_entry.address)
+        #                 address_entry.set_leasing_company_name('None')
+        #                 return
+        #         finally:
+        #             availability_grid_section = self.web_driver_handle.find_element_by_id('contenttableavailabilityGrid')
+        #             break
+        #     except NoSuchElementException:
+        #         self.web_driver_handle.refresh()
+        #         retries += 1
+        #         pass
 
         available_spaces = availability_grid_section.find_elements_by_xpath("//div[@class='']")
         available_space = available_spaces[0]
