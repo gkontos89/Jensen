@@ -53,10 +53,9 @@ class ExportDriver:
         date = "{:%m}".format(now) + "{:%d}".format(now) + "{:%y}".format(now)
 
         # Find out the file location based on OS
-        if platform.system() == 'Windows':
-            self.export_file_name = os.path.join('C:\\Users', getpass.getuser(), 'Downloads', 'Export' + date +
-                                                 self.export_file_type_extension)
-        # TODO figure out download location for MAC
+        root = 'C:\\Users' if platform.system() == 'Windows' else '/users/'
+        self.export_file_name = os.path.join(root, getpass.getuser(), 'Downloads', 'Export' + date +
+                                             self.export_file_type_extension)
 
         # Remove old file if exists
         if os.path.isfile(self.export_file_name):

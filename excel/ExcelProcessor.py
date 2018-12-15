@@ -14,6 +14,7 @@ class ExcelProcessor:
         self.processed_work_sheet = None
 
     def pre_process_file(self, exported_file_name):
+        # TODO pass in client name and add to file name
         self.processed_file_name = exported_file_name.split('.')[0] + '_Processed.xlsx'
         # Handle .xls format, which is actually HTML out of co-star
         if exported_file_name.split('.')[1] == 'xls':

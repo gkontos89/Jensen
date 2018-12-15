@@ -1,3 +1,4 @@
+import os
 import platform
 import subprocess
 import threading
@@ -150,6 +151,7 @@ class ProcessingFrame(BaseFrame):
         self.report_exporting_data_complete()
 
     def continue_export_button_command(self):
+        # TODO add client name to the thread
         process_client_thread = threading.Thread(target=self.driver.process_client_entry,
                                                  args=[self])
         process_client_thread.start()
@@ -165,7 +167,8 @@ class ProcessingFrame(BaseFrame):
         processed_file_name = self.driver.get_processed_file_name()
         if platform.system() == 'Windows':
             subprocess.Popen('explorer "' + processed_file_name + '"')
-            # TODO handle mac
+        else:
+            os.system("open " + processed_file_name)
 
     def finished_button_command(self):
         self.reset_processing_screen()

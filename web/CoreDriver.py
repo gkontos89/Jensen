@@ -8,6 +8,7 @@ from enum import Enum
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.chrome.options import Options
 
 from excel.ExcelProcessor import ExcelProcessor
 from utilities.JensenLogger import JensenLogger
@@ -21,6 +22,7 @@ class WebBrowser(Enum):
     CHROME = 1
     FIREFOX = 2
     EDGE = 3
+    SAFARI = 4
 
 
 class CoreDriver:
@@ -31,11 +33,25 @@ class CoreDriver:
 
     def configure_web_driver(self, web_browser):
         if web_browser == WebBrowser.CHROME:
-            self.web_driver = webdriver.Chrome()
+            # use the user options
+            chrome_options = Options()
+            chrome_user_path = None
+            if platform.system() is not 'Windows':
+                chrome_user_path = os.path.join('/users/', getpass.getuser(), 'Library',
+                                                'Application', 'Support', 'Google', 'Chrome',
+                                                'Default')
+            else:
+                chrome_user_path = os.path.join('C:\\Users', getpass.getuser(), 'AppData', 'Local',
+                                                'Google', 'Chrome', 'User Data', 'Default')
+            chrome_argument = "user-data-dir=" + chrome_user_path
+            chrome_options.add_argument(chrome_argument)
+            self.web_driver = webdriver.Chrome(chrome_options=chrome_options)
         elif web_browser == WebBrowser.FIREFOX:
             self.web_driver = webdriver.Firefox()
         elif web_browser == WebBrowser.EDGE:
             self.web_driver = webdriver.Edge()
+        elif web_browser == WebBrowser.SAFARI:
+            self.web_driver = webdriver.Safari()
 
     def close_web_driver(self):
         self.web_driver.close()
@@ -74,6 +90,7 @@ class CoreDriver:
         :param controller: handle to frame that contains elements for updating a GUI for progress
         :return: N/A
         """
+        # TODO pass in client name to pass into the pre_process_file function
         try:
             self.export_driver.close_export_window()
 
@@ -105,11 +122,15 @@ class CoreDriver:
                 leases_found = True
                 try:
                     lease_driver.go_to_lease_info()
-                except NoSuchElementException:
+                    JensenLogger.get_instance().log_info("Lease button clicked for address: " + address_entry.address)
+                except:
+                    JensenLogger.get_instance().log_exception("Potential no leases found for address: " +
+                                                              address_entry.address)
                     leases_found = False
                     pass
 
                 if leases_found:
+                    JensenLogger.get_instance().log_info("Going to Leases for " + address_entry.address)
                     lease_driver.process_lease_listings(address_entry)
 
                 controller.report_square_footage_retrieved()
@@ -131,7 +152,7 @@ class CoreDriver:
         except:
             JensenLogger.get_instance().log_exception("Failed generating post processed excel file!")
 
-        time.sleep(2)
+        time.sleep(1)
         self.open_menu()
         self.go_to_surveys()
 
