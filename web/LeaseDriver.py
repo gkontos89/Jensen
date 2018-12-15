@@ -26,7 +26,6 @@ class LeaseDriver:
                 .until(expected_conditions.presence_of_element_located((element_type, element_string)))
 
     def go_to_lease_info(self):
-        # lease_tab_element = self.web_driver_handle.find_element_by_link_text('Lease')
         lease_tab_element = self.get_web_driver_wait_handle(element_type=By.LINK_TEXT, element_string='Lease')
         lease_tab_element.click()
 
@@ -41,19 +40,27 @@ class LeaseDriver:
         retries = 0
         availability_grid_section = None
         no_spaces_available = None
+        self.web_driver_handle.implicitly_wait(5)
         while retries < 2:
             try:
                 availability_grid_section = self.web_driver_handle.find_element_by_id('contenttableavailabilityGrid')
+                JensenLogger.get_instance().log_info("Available leases found for: " + address_entry.address +
+                                                     ". Retry count: " + str(retries))
                 break
             except NoSuchElementException:
+                JensenLogger.get_instance().log_info("Available leases could not be found: " + address_entry.address +
+                                                     ". Retry count: " + str(retries))
                 try:
                     no_spaces_available = self.web_driver_handle.find_element_by_class_name('availability-spaces-not-available')
+                    JensenLogger.get_instance().log_info("No lease spaces found for address: " + address_entry.address)
                     break
                 except NoSuchElementException:
                     if retries > 0:
-                        JensenLogger.get_instance().log_warning("It appears the lease page didn't properly load for " +
-                                                                address_entry.address)
+                        JensenLogger.get_instance().log_error("It appears the lease page didn't properly load for " +
+                                                              address_entry.address + ". Retry count: "
+                                                              + str(retries))
                         address_entry.set_leasing_company_name('None')
+                        self.web_driver_handle.implicitly_wait(10)
                         return
                     else:
                         retries += 1
@@ -62,34 +69,14 @@ class LeaseDriver:
         if no_spaces_available is not None:
             JensenLogger.get_instance().log_info("No spaces are available for " + address_entry.address)
             address_entry.set_leasing_company_name('NO LEASES AVAILABLE')
+            self.web_driver_handle.implicitly_wait(10)
             return
 
         if availability_grid_section is None:
             JensenLogger.get_instance().log_warning("Lease page had trouble loading for " + address_entry.address +
                                                     " after two attempts")
+            self.web_driver_handle.implicitly_wait(10)
             return
-
-
-        # retries = 0
-        # availability_grid_section = None
-        # while retries < 3:
-        #     try:
-        #         # Check to see if there are any leases even available
-        #         try:
-        #             no_spaces_available = self.get_web_driver_wait_handle(element_type=By.CLASS_NAME,
-        #                                                                   element_string='availability-spaces-not-available',
-        #                                                                   timeout=2)
-        #             if no_spaces_available is not None:
-        #                 JensenLogger.get_instance().log_info('No leases available for ' + address_entry.address)
-        #                 address_entry.set_leasing_company_name('None')
-        #                 return
-        #         finally:
-        #             availability_grid_section = self.web_driver_handle.find_element_by_id('contenttableavailabilityGrid')
-        #             break
-        #     except NoSuchElementException:
-        #         self.web_driver_handle.refresh()
-        #         retries += 1
-        #         pass
 
         available_spaces = availability_grid_section.find_elements_by_xpath("//div[@class='']")
         available_space = available_spaces[0]
@@ -100,31 +87,25 @@ class LeaseDriver:
         if len(available_spaces) > 1:
             # next_lease_button = self.web_driver_handle.find_element_by_class_name('right')
             next_lease_button = self.get_web_driver_wait_handle(element_type=By.CLASS_NAME, element_string='right')
-            # close_button = self.web_driver_handle.find_element_by_class_name('close close-icon')
 
         back_button = self.web_driver_handle.find_element_by_class_name('go-back')
         num_clicks = len(available_spaces) - 1 if len(available_spaces) > 1 else 1  # take one out because the first one already appears
         for i in range(0, num_clicks):
-            # lease_element = self.web_driver_handle.find_element_by_id('LeaseType')
             lease_element = self.get_web_driver_wait_handle(element_string='LeaseType')
             lease_text = lease_element.find_element_by_xpath("//span[@data-bind='textWithTitle: LeaseType']")
             if lease_text.text == 'Relet':
                 # grab rent
-                # rent = self.web_driver_handle.find_element_by_id('Rent_Display')
                 rent = self.get_web_driver_wait_handle(element_string='Rent_Display')
                 rent_text = rent.find_element_by_xpath("//span[@data-bind='textWithTitle: Rent.Display']")
                 address_entry.set_actual_rent(rent_text.text)  # TODO find out if you need multiple rents
 
                 # grab square
                 square_footage = self.get_web_driver_wait_handle(element_string='AvailableArea')
-                # square_footage = self.web_driver_handle.find_element_by_id('AvailableArea')
                 square_footage_text = square_footage.find_element_by_xpath("//span[@data-bind='text: AvailableArea']")
                 address_entry.add_square_footage(square_footage_text.text)
 
                 # grab contacts
                 contacts_container = self.get_web_driver_wait_handle(element_type=By.CLASS_NAME, element_string='contacts-container')
-                # contacts_container = self.web_driver_handle.find_element_by_class_name('contacts-container')
-                # contact_boxes = contacts_container.find_elements_by_xpath("//div[@class='contact-box']")
                 contact_boxes = self.get_web_driver_wait_handle(driver=contacts_container, element_type=By.XPATH, element_string="//div[@class='contact-box']", multiple=True)
                 for contact_box in contact_boxes:
                     name_element = self.get_web_driver_wait_handle(driver=contact_box, element_type=By.CLASS_NAME, element_string='contact-name')
@@ -139,15 +120,6 @@ class LeaseDriver:
                     for string in contact_box_text_list:
                         if '(m)' in string:
                             phone = string
-                    # phone_numbers_container = contact_box.\
-                    #     find_element_by_xpath("//div[@class='section contact-details']//div[@data-bind='foreach: "
-                    #                           "PhoneNumbers.Items']")
-                    # phone_number_elements = phone_numbers_container.find_elements_by_tag_name('div')
-                    # for phone_number_element in phone_number_elements:
-                    #     if phone_number_element.\
-                    #             find_element_by_xpath("//span[@data-bind='textWithTitle: Desc']").text == '(m)':
-                    #         phone = phone_number_element.\
-                    #             find_element_by_xpath("//span[@data-bind='textWithTitle: Number']").text
 
                     email_element = self.get_web_driver_wait_handle(driver=contact_box, element_type=By.TAG_NAME, element_string='a')
                     email = email_element.text
