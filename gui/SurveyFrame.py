@@ -15,12 +15,12 @@ class SurveyFrame(BaseFrame):
         self.form_list_frame = Frame(self)
         self.processing_frame = Frame(self)
         self.collect_surveys_button = Button(self, text='Collect Surveys', command=self.collect_surveys_button_command)
-        self.client_list_box = Listbox(self.client_list_frame, height=10, width=35, exportselection=0,
+        self.client_list_box = Listbox(self.client_list_frame, height=10, width=35, exportselection=False,
                                        selectmode='single')
-        self.client_list_box.bind('<<ListboxSelect>>', self.on_client_selection)
+        self.client_list_box.bind('<Double-Button-1>', self.on_client_selection)
         self.client_list_scrollbar = Scrollbar(self.client_list_frame, command=self.client_list_box.yview)
         self.client_list_box.config(yscrollcommand=self.client_list_scrollbar.set)
-        self.forms_list_box = Listbox(self.form_list_frame, height=10, width=35, exportselection=0, selectmode='single')
+        self.forms_list_box = Listbox(self.form_list_frame, height=10, width=35, exportselection=False, selectmode='single')
         self.forms_list_scrollbar = Scrollbar(self.form_list_frame, command=self.forms_list_box.yview)
         self.process_form_button = Button(self.processing_frame, text='Continue',
                                           command=self.process_form_button_command)
