@@ -46,6 +46,7 @@ class LeaseDriver:
                 availability_grid_section = self.web_driver_handle.find_element_by_id('contenttableavailabilityGrid')
                 JensenLogger.get_instance().log_info("Available leases found for: " + address_entry.address +
                                                      ". Retry count: " + str(retries))
+                self.web_driver_handle.implicitly_wait(15)
                 break
             except NoSuchElementException:
                 JensenLogger.get_instance().log_info("Available leases could not be found: " + address_entry.address +
