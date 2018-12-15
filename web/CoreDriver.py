@@ -90,6 +90,7 @@ class CoreDriver:
         :param controller: handle to frame that contains elements for updating a GUI for progress
         :return: N/A
         """
+        # TODO pass in client name to pass into the pre_process_file function
         try:
             self.export_driver.close_export_window()
 

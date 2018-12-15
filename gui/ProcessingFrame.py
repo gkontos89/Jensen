@@ -151,6 +151,7 @@ class ProcessingFrame(BaseFrame):
         self.report_exporting_data_complete()
 
     def continue_export_button_command(self):
+        # TODO add client name to the thread
         process_client_thread = threading.Thread(target=self.driver.process_client_entry,
                                                  args=[self])
         process_client_thread.start()
