@@ -13,9 +13,8 @@ class ExcelProcessor:
         self.processed_work_book = None
         self.processed_work_sheet = None
 
-    def pre_process_file(self, exported_file_name):
-        # TODO pass in client name and add to file name
-        self.processed_file_name = exported_file_name.split('.')[0] + '_Processed.xlsx'
+    def pre_process_file(self, exported_file_name, client_name):
+        self.processed_file_name = client_name + '__' + exported_file_name.split('.')[0] + '_Processed.xlsx'
         # Handle .xls format, which is actually HTML out of co-star
         if exported_file_name.split('.')[1] == 'xls':
             data = pandas.read_html(exported_file_name)[0]

@@ -82,21 +82,21 @@ class CoreDriver:
         self.export_driver.export_data()
         controller.show_continue_export_button()
 
-    def process_client_entry(self, controller):
+    def process_client_entry(self, controller, client_name):
         """
         This will process a client's form all the way through exporting the data to csv, xls, ect. and then
         post processing the data into a properly formatted xlsx file
 
         :param controller: handle to frame that contains elements for updating a GUI for progress
+        :param client_name: name of client being processed
         :return: N/A
         """
-        # TODO pass in client name to pass into the pre_process_file function
         try:
             self.export_driver.close_export_window()
 
             # Process exported file
             self.excel_processor = ExcelProcessor()
-            self.excel_processor.pre_process_file(self.export_driver.export_file_name)
+            self.excel_processor.pre_process_file(self.export_driver.export_file_name, client_name)
             controller.report_pre_processed_data_complete()
 
             '''
