@@ -8,6 +8,7 @@ from tkinter import Button, Label, Tk, LabelFrame
 from gui.BaseFrame import BaseFrame
 from gui.ProcessingProgressBar import ProcessingProgressBar
 from utilities.JensenLogger import JensenLogger
+from web.ClientProcessor import ClientProcessor
 
 
 class ProcessingFrame(BaseFrame):
@@ -16,6 +17,7 @@ class ProcessingFrame(BaseFrame):
         self.parent = parent
         self.controller = controller
         self.driver = driver
+        self.client_processor = None
         self.current_client_name = None
         self.current_form_name = None
         self.number_of_listings_to_process = -1
@@ -81,6 +83,7 @@ class ProcessingFrame(BaseFrame):
             pass
 
     def reset_processing_screen(self):
+        self.client_processor = None
         self.client_name_text.config(text='')
         self.form_name_text.config(text='')
         self.start_processing_button.pack_forget()
@@ -95,6 +98,7 @@ class ProcessingFrame(BaseFrame):
         self.processed_listings_track_text.config(text='')
         self.processed_file_complete_text.config(text='')
         self.processing_progress_bar.reset()
+        self.cancel_button.pack()
         self.view_processed_file_button.pack_forget()
         self.finished_button.pack_forget()
 
@@ -142,7 +146,7 @@ class ProcessingFrame(BaseFrame):
     def report_processed_file_complete(self):
         self.processing_progress_bar.increment_step()
         self.processed_file_complete_text.config(text='Processed file complete!')
-        self.cancel_button.pack_forget()
+        # self.cancel_button.pack_forget()
         self.view_processed_file_button.pack()
         self.finished_button.pack()
 
@@ -151,16 +155,25 @@ class ProcessingFrame(BaseFrame):
         self.report_exporting_data_complete()
 
     def continue_export_button_command(self):
-        process_client_thread = threading.Thread(target=self.driver.process_client_entry,
-                                                 args=[self, self.current_client_name])
-        process_client_thread.start()
+        self.client_processor = ClientProcessor(self.driver, self, self.current_client_name)
+        self.client_processor.start()
         self.continue_export_button.pack_forget()
 
     def cancel_button_command(self):
-        self.reset_processing_screen()
-        self.controller.show_frame('SurveyFrame')
         JensenLogger.get_instance().log_info("Cancelling processing...")
-        pass
+        self.reset_processing_screen()
+        self.exporting_data_text.config(text='Canceling, please wait...')
+        if self.client_processor is not None and isinstance(self.client_processor, ClientProcessor):
+            JensenLogger.get_instance().log_info("Killing processing thread...")
+            self.client_processor.stop_flag.set()
+            self.client_processor.join(30)
+            if self.client_processor.is_alive():
+                JensenLogger.get_instance().log_error("Cancellation failed!")
+            else:
+                JensenLogger.get_instance().log_info("Processing thread killed!")
+
+        self.exporting_data_text.config(text='')
+        self.controller.show_frame('SurveyFrame')
 
     def view_processed_file_button_command(self):
         processed_file_name = self.driver.get_processed_file_name()

@@ -3,12 +3,14 @@ import getpass
 import os
 import platform
 import sys
+import threading
 import time
 from enum import Enum
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 
 from excel.ExcelProcessor import ExcelProcessor
 from utilities.JensenLogger import JensenLogger
@@ -34,7 +36,7 @@ class CoreDriver:
     def configure_web_driver(self, web_browser):
         if web_browser == WebBrowser.CHROME:
             # use the user options
-            chrome_options = Options()
+            chrome_options = ChromeOptions()
             chrome_user_path = None
             if platform.system() is not 'Windows':
                 chrome_user_path = os.path.join('/users/', getpass.getuser(), 'Library',
@@ -121,6 +123,7 @@ class CoreDriver:
                 lease_driver = LeaseDriver(self.web_driver)
                 leases_found = True
                 try:
+                    # todo check what type of property it is to see if lease button or residential should be checked
                     lease_driver.go_to_lease_info()
                     JensenLogger.get_instance().log_info("Lease button clicked for address: " + address_entry.address)
                 except:
